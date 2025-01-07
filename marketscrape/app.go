@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
 	"strings"
 
 	"github.com/iunary/fakeuseragent"
@@ -172,6 +173,22 @@ func (a *App) GetMarketplaceListing(id string) (string, error) {
 	var result map[string]interface{}
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return "", fmt.Errorf("error parsing JSON: %v", err)
+	}
+
+	// Save raw data to a text file
+	file, err := os.Create("result.txt")
+	if err != nil {
+		return "", fmt.Errorf("error creating file: %v", err)
+	}
+	defer file.Close()
+
+	rawData, err := json.MarshalIndent(result, "", "  ")
+	if err != nil {
+		return "", fmt.Errorf("error marshalling raw data: %v", err)
+	}
+
+	if _, err := file.Write(rawData); err != nil {
+		return "", fmt.Errorf("error writing to file: %v", err)
 	}
 
 	listing, err := ParseMarketplaceResponse(result)
