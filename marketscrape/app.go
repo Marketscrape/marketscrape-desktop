@@ -175,10 +175,9 @@ func (a *App) GetMarketplaceListing(id string) (string, error) {
 		return "", fmt.Errorf("error parsing JSON: %v", err)
 	}
 
-	// Save raw data to a text file
-	file, err := os.Create("result.txt")
+	file, err := os.Create("result.json")
 	if err != nil {
-		return "", fmt.Errorf("error creating file: %v", err)
+		return "", fmt.Errorf("error creating JSON file: %v", err)
 	}
 	defer file.Close()
 
@@ -188,7 +187,7 @@ func (a *App) GetMarketplaceListing(id string) (string, error) {
 	}
 
 	if _, err := file.Write(rawData); err != nil {
-		return "", fmt.Errorf("error writing to file: %v", err)
+		return "", fmt.Errorf("error writing to JSON file: %v", err)
 	}
 
 	listing, err := ParseMarketplaceResponse(result)
