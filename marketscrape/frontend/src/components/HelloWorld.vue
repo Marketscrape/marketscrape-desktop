@@ -12,12 +12,16 @@ async function getMarketplaceListing() {
   if (!id.value) {
     return;
   }
-  GetMarketplaceListing(id.value).then((resp) => (res.value = resp));
+  GetMarketplaceListing(id.value).then((resp) => {
+    res.value = JSON.stringify(resp, null, 2);
+  });
 }
 </script>
 
 <template>
   <Input v-model="id" />
   <Button @click="getMarketplaceListing">Submit</Button>
-  {{ res }}
+  <pre>
+    {{ res }}
+  </pre>
 </template>
