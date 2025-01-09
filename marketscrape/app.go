@@ -18,6 +18,12 @@ type App struct {
 	ctx context.Context
 }
 
+// Marketplace listing struct
+type MarketplaceListingResult struct {
+	Data  map[string]interface{} `json:"data"`
+	Error string                 `json:"error,omitempty"`
+}
+
 // NewApp creates a new App application struct
 func NewApp() *App {
 	return &App{}
@@ -56,7 +62,7 @@ func ParseMarketplaceListing(rawJson map[string]interface{}) (map[string]interfa
 	return marketplaceProductDetailsPage, nil
 }
 
-func (a *App) GetMarketplaceListing(id string) map[string]interface{} {
+func (a *App) GetMarketplaceListing(id string) MarketplaceListingResult {
 	client := &http.Client{
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
@@ -70,8 +76,8 @@ func (a *App) GetMarketplaceListing(id string) map[string]interface{} {
 
 	req, err := http.NewRequest("POST", "https://www.facebook.com/api/graphql/", strings.NewReader(payload.Encode()))
 	if err != nil {
-		return map[string]interface{}{
-			"error": "Error creating request",
+		return MarketplaceListingResult{
+			Error: "Error creating request",
 		}
 	}
 
@@ -91,33 +97,33 @@ func (a *App) GetMarketplaceListing(id string) map[string]interface{} {
 
 	res, err := client.Do(req)
 	if err != nil {
-		return map[string]interface{}{
-			"error": "Error performing request",
+		return MarketplaceListingResult{
+			Error: "Error performing request",
 		}
 	}
 	defer res.Body.Close()
 
 	bodyBytes, err := io.ReadAll(res.Body)
 	if err != nil {
-		return map[string]interface{}{
-			"error": "Error reading response body",
+		return MarketplaceListingResult{
+			Error: "Error reading response body",
 		}
 	}
 
 	var rawJson map[string]interface{}
 	err = json.Unmarshal(bodyBytes, &rawJson)
 	if err != nil {
-		return map[string]interface{}{
-			"error": "Error unmarshalling response",
+		return MarketplaceListingResult{
+			Error: "Error unmarshalling response",
 		}
 	}
 
 	parsedData, err := ParseMarketplaceListing(rawJson)
 	if err != nil {
-		return map[string]interface{}{
-			"error": err.Error(),
+		return MarketplaceListingResult{
+			Error: err.Error(),
 		}
 	}
 
-	return parsedData
+	return MarketplaceListingResult{Data: parsedData}
 }
