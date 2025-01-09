@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
+import { vAutoAnimate } from "@formkit/auto-animate/vue";
 
 import { Input } from "./ui/input/index.js";
 import { Button } from "./ui/button/index.js";
@@ -66,7 +67,7 @@ const onSubmit = form.handleSubmit(async (values) => {
         </CardHeader>
         <CardContent>
           <FormField v-slot="{ componentField }" name="listingId">
-            <FormItem>
+            <FormItem v-auto-animate>
               <FormLabel>Listing ID</FormLabel>
               <FormControl>
                 <Input

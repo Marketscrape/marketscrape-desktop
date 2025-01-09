@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.8.2",
     "@vee-validate/zod": "^4.15.0",
     "@vueuse/core": "^12.3.0",
     "class-variance-authority": "^0.7.1",
