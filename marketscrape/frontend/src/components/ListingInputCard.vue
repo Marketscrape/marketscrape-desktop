@@ -35,9 +35,10 @@ const formSchema = toTypedSchema(
   z.object({
     listingId: z
       .string()
-      .length(15, { message: "Listing ID must be exactly 15 characters long" })
-      .regex(/^[0-9]{15}$/, {
-        message: "Listing ID must only contain 15 digits",
+      .min(15, { message: "Listing ID must be at least 15 characters long" })
+      .max(16, { message: "Listing ID must be at most 16 characters long" })
+      .regex(/^[0-9]{15,16}$/, {
+        message: "Listing ID must only contain 15-16 digits",
       }),
   }),
 );
@@ -74,12 +75,12 @@ const onSubmit = form.handleSubmit(async (values) => {
               <FormControl>
                 <Input
                   type="text"
-                  placeholder="Enter 15-digit Listing ID"
+                  placeholder="Enter 15- or 16-digit Listing ID"
                   v-bind="componentField"
                 />
               </FormControl>
               <FormDescription>
-                The unique 15-digit ID of the listing.
+                The unique 15- or 16-digit ID of the listing.
               </FormDescription>
               <FormMessage />
             </FormItem>
