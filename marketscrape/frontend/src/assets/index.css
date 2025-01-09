@@ -70,7 +70,7 @@
 
 @layer base {
   * {
-    @apply border-border dark overflow-hidden;
+    @apply border-border dark;
   }
   body {
     @apply bg-background text-foreground p-8;

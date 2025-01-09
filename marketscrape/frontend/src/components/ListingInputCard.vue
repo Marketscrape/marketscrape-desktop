@@ -55,7 +55,7 @@ const onSubmit = form.handleSubmit(async (values) => {
 </script>
 
 <template>
-  <div class="flex h-screen items-center">
+  <div class="flex h-[calc(100vh-4rem)] items-center">
     <form class="mx-auto" @submit="onSubmit">
       <Card>
         <CardHeader>
