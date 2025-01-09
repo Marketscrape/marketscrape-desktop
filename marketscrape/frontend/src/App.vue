@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import HelloWorld from "./components/HelloWorld.vue";
+import ListingInputCard from "./components/ListingInputCard.vue";
 </script>
 
 <template>
-  <HelloWorld />
+  <ListingInputCard />
 </template>
