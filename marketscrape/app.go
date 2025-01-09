@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strings"
 
 	"github.com/iunary/fakeuseragent"
@@ -63,6 +64,13 @@ func ParseMarketplaceListing(rawJson map[string]interface{}) (map[string]interfa
 }
 
 func (a *App) GetMarketplaceListing(id string) MarketplaceListingResult {
+	r, _ := regexp.Compile("^[0-9]{15}$")
+	if !r.MatchString(id) {
+		return MarketplaceListingResult{
+			Error: "Error parsing Marketplace listing ID",
+		}
+	}
+
 	client := &http.Client{
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
@@ -125,5 +133,7 @@ func (a *App) GetMarketplaceListing(id string) MarketplaceListingResult {
 		}
 	}
 
-	return MarketplaceListingResult{Data: parsedData}
+	return MarketplaceListingResult{
+		Data: parsedData,
+	}
 }
