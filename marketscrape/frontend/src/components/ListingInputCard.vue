@@ -24,11 +24,12 @@ import {
   FormMessage,
 } from "./ui/form/index.js";
 
-import { Send } from "lucide-vue-next";
+import { Send, Loader2 } from "lucide-vue-next";
 
 import { GetMarketplaceListing } from "../../wailsjs/go/main/App.js";
 
-const res = ref("");
+const isLoading = ref(false);
+const emit = defineEmits(["listing"]);
 
 const formSchema = toTypedSchema(
   z.object({
@@ -46,10 +47,11 @@ const form = useForm({
 });
 
 const onSubmit = form.handleSubmit(async (values) => {
+  isLoading.value = true;
   const { listingId } = values;
 
   GetMarketplaceListing(listingId).then((resp) => {
-    res.value = JSON.stringify(resp, null, 2);
+    emit("listing", JSON.stringify(resp, null, 2));
   });
 });
 </script>
@@ -84,9 +86,15 @@ const onSubmit = form.handleSubmit(async (values) => {
           </FormField>
         </CardContent>
         <CardFooter class="flex justify-end">
-          <Button type="submit">
-            <Send />
-            Submit
+          <Button type="submit" :disabled="isLoading">
+            <template v-if="!isLoading">
+              <Send />
+              Submit
+            </template>
+            <template v-else>
+              <Loader2 class="animate-spin" />
+              Loading...
+            </template>
           </Button>
         </CardFooter>
       </Card>
