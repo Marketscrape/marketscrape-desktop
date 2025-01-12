@@ -52,7 +52,7 @@ const firstAttributeLabel = computed(() => {
       <CardTitle class="space-y-1">
         <div class="text-xl font-semibold leading-none tracking-tight">
           {{
-            listing.marketplace_listing_renderable_target
+            listing.target
               .marketplace_listing_title
           }}
         </div>

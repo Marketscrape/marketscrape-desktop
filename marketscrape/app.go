@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
 	"regexp"
 	"strings"
 
@@ -133,7 +134,26 @@ func (a *App) GetMarketplaceListing(id string) MarketplaceListingResult {
 		}
 	}
 
+	// Save the raw JSON to a file
+	err = SaveJSONToFile("output.json", rawJson)
+	if err != nil {
+		fmt.Println("Error saving JSON to file:", err)
+	}
+
 	return MarketplaceListingResult{
 		Data: parsedData,
 	}
+}
+
+// SaveJSONToFile saves a JSON object to a file
+func SaveJSONToFile(filename string, data interface{}) error {
+	file, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "  ")
+	return encoder.Encode(data)
 }
