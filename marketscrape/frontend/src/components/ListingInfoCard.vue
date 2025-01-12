@@ -26,8 +26,24 @@ const props = defineProps<{
 const creationTime = computed(() =>
   formatDistanceToNow(new Date(props.listing.target.creation_time * 1000), {
     addSuffix: true,
-  }),
+  })
 );
+
+// Preprocess categories to handle null issues
+const processedCategories = computed(() => {
+  return (
+    props.listing.marketplace_listing_renderable_target?.seo_virtual_category
+      ?.taxonomy_path?.map((category: any) => ({
+        id: category.id,
+        seoUrl: category.seo_info?.seo_url || "unknown-category",
+      })) || []
+  );
+});
+
+// Safely access attribute_data
+const firstAttributeLabel = computed(() => {
+  return props.listing.target.attribute_data?.[0]?.label || "No attribute available";
+});
 </script>
 
 <template>
@@ -41,29 +57,28 @@ const creationTime = computed(() =>
           }}
         </div>
         <div>
-          {{ listing.target.listing_price?.formatted_amount_zeros_stripped || "N/A" }}
+          {{ listing.target.listing_price.formatted_amount_zeros_stripped }}
         </div>
       </CardTitle>
       <CardDescription class="space-x-1">
         <Badge
-          v-for="category in listing.marketplace_listing_renderable_target
-            ?.seo_virtual_category?.taxonomy_path || []"
+          v-for="category in processedCategories"
           :key="category.id"
           class="text-xs"
         >
-          {{ toTitleCase(category.seo_info?.seo_url?.replace("-", " ") || "Unknown") }}
+          {{ toTitleCase(category.seoUrl.replace("-", " ")) }}
         </Badge>
       </CardDescription>
     </CardHeader>
     <CardContent class="space-y-4">
       <p>
-        {{ listing.target.redacted_description?.text || "No description available." }}
+        {{ listing.target.redacted_description.text }}
       </p>
       <Separator />
       <div class="grid grid-flow-row text-sm text-muted-foreground gap-1">
         <div class="flex items-center space-x-1">
           <Tag class="h-4 w-4" />
-          <span>{{ listing.target.attribute_data?.[0]?.label || "N/A" }}</span>
+          <span>{{ firstAttributeLabel }}</span>
         </div>
         <div class="flex items-center space-x-1">
           <Clock class="h-4 w-4" />
@@ -71,7 +86,7 @@ const creationTime = computed(() =>
         </div>
         <div class="flex items-center space-x-1">
           <MapPin class="h-4 w-4" />
-          <span>{{ listing.target.location_text?.text || "Location not specified." }}</span>
+          <span>{{ listing.target.location_text.text }}</span>
         </div>
       </div>
     </CardContent>
@@ -84,7 +99,7 @@ const creationTime = computed(() =>
           </Button>
         </DialogTrigger>
         <DialogContent class="sm:max-w-[700px] p-6">
-          <ImageGallery :images="listing.target.listing_photos || []" />
+          <ImageGallery :images="listing.target.listing_photos" />
         </DialogContent>
       </Dialog>
     </CardFooter>
