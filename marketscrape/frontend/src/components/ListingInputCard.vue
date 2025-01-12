@@ -17,7 +17,6 @@ import {
 } from "./ui/card/index.js";
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -38,15 +37,16 @@ const isLoading = ref(false);
 const emit = defineEmits(["listing"]);
 const formSchema = toTypedSchema(
   z.object({
-    listingId: z
-      .string()
-      .refine(value => {
-        const isUrl = value.startsWith('http');
+    listingId: z.string().refine(
+      (value) => {
+        const isUrl = value.startsWith("http");
         const isId = /^[0-9]{15,16}$/.test(value);
         return isUrl || isId;
-      }, {
+      },
+      {
         message: "Listing must be a valid URL or 15-16 digit ID",
-      })
+      },
+    ),
   }),
 );
 
@@ -77,8 +77,8 @@ const onSubmit = form.handleSubmit(async (values) => {
         <CardHeader>
           <CardTitle>Analyze a Marketplace Listing</CardTitle>
           <CardDescription>
-            Enter the listing URL or ID to retrieve detailed information and insights
-            about the product.
+            Enter the listing URL or ID to retrieve detailed information and
+            insights about the product.
           </CardDescription>
         </CardHeader>
         <CardContent>
