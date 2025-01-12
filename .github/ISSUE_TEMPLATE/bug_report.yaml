@@ -1,0 +1,117 @@
+---
+name: 🐛 Bug report
+description: Create a report to help us improve
+
+body:
+- type: markdown
+  attributes:
+    value: >
+      **Thank you for wanting to report a bug in Marketscrape!**
+
+
+      ⚠
+      Verify first that your issue is not [already reported on
+      GitHub][issue search] and keep in mind that we may have to keep
+      the current behavior because every change breaks someone's
+      workflow.
+      We try to be mindful about this.
+
+      Also test if the latest release and devel branch are affected too.
+
+- type: textarea
+  attributes:
+    label: Summary
+    description: Explain the problem briefly below.
+    placeholder: >-
+      When I try to do X with marketscrape from the main branch on GitHub, Y
+      breaks in a way Z under the env E. Here are all the details I know
+      about this problem...
+  validations:
+    required: true
+
+- type: input
+  attributes:
+    label: Component Name
+    description: >
+      Write the short name of the rst file, module, plugin, task or
+      feature below, *use your best guess if unsure*.
+    placeholder: marketscrape/scraper/utils.py
+  validations:
+    required: true
+
+- type: textarea
+  attributes:
+    label: OS / Environment
+    description: >-
+      Provide all relevant information below, e.g. target OS versions,
+      network device firmware, etc.
+    placeholder: RHEL 8, CentOS Stream etc.
+  validations:
+    required: true
+
+
+- type: textarea
+  attributes:
+    label: Steps to Reproduce
+    description: |
+      Describe exactly how to reproduce the problem, using a minimal test-case. It would *really* help us understand your problem if you could also pased any playbooks, configs and commands you used.
+
+      **HINT:** You can paste https://gist.github.com links for larger files.
+    placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+  validations:
+    required: true
+
+- type: textarea
+  attributes:
+    label: Expected Results
+    description: >-
+      Describe what you expected to happen when running the steps above.
+    placeholder: >-
+      I expected X to happen because I assumed Y and was shocked
+      that it did not.
+  validations:
+    required: true
+
+- type: textarea
+  attributes:
+    label: Actual Results
+    description: |
+      Describe what actually happened. If possible run with extra verbosity (`-vvvv`).
+
+      Paste verbatim command output and don't wrap it with triple backticks — your
+      whole input will be turned into a code snippet automatically.
+    render: console
+    placeholder: >-
+      Exception:
+        During handling of the above exception, another exception occurred:
+
+        Traceback (most recent call last):
+          File "urlcaller.py", line 5, in <module>
+            response = requests.get(sys.argv[1])
+          File "/path/to/requests/api.py", line 75, in get
+            return request('get', url, params=params, **kwargs)
+          File "/path/to/requests/api.py", line 60, in request
+            return session.request(method=method, url=url, **kwargs)
+          File "/path/to/requests/sessions.py", line 533, in request
+            resp = self.send(prep, **send_kwargs)
+          File "/path/to/requests/sessions.py", line 646, in send
+            r = adapter.send(request, **kwargs)
+          File "/path/to/requests/adapters.py", line 516, in send
+            raise ConnectionError(e, request=request)
+        requests.exceptions.ConnectionError: HTTPConnectionPool(host='thisurlprobablydoesntexist.com', port=8000): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7faf9d671860>: Failed to establish a new connection: [Errno -2] Name or service not known',))
+  validations:
+    required: true
+
+- type: checkboxes
+  attributes:
+    label: Code of Conduct
+    description: |
+      Read the Marketscrape Code of Conduct first.
+    options:
+    - label: I agree to follow the Marketscrape Code of Conduct
+      required: true
+...
