@@ -3,30 +3,31 @@ import { ref } from "vue";
 
 import { Button } from "./components/ui/button";
 
-import ListingInputCard from "./components/ListingInputCard.vue";
+import { ArrowLeft } from "lucide-vue-next";
 
-const listingData = ref<string | null>(null);
+import ListingInputCard from "./components/ListingInputCard.vue";
+import ListingInfoCard from "./components/ListingInfoCard.vue";
+
+const listing = ref<string | null>(null);
 
 const handleListing = (data: string) => {
-  listingData.value = data;
+  listing.value = JSON.parse(data).data;
 };
 
 const resetListing = () => {
-  listingData.value = null;
+  listing.value = null;
 };
 </script>
 
 <template>
   <div>
-    <ListingInputCard v-if="!listingData" @listing="handleListing" />
-    <div v-else class="overflow-y-auto">
-      <div>
-        <h2 class="text-lg font-semibold mb-2">Listing Details</h2>
-        <pre>
-          {{ listingData }}
-        </pre>
-        <Button @click="resetListing">Analyze Another Listing</Button>
-      </div>
+    <ListingInputCard v-if="!listing" @listing="handleListing" />
+    <div v-else class="space-y-8">
+      <Button @click="resetListing">
+        <ArrowLeft />
+        Go Back
+      </Button>
+      <ListingInfoCard :listing="listing" />
     </div>
   </div>
 </template>
