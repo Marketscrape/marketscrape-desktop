@@ -64,7 +64,7 @@ func ParseMarketplaceListing(rawJson map[string]interface{}) (map[string]interfa
 }
 
 func (a *App) GetMarketplaceListing(id string) MarketplaceListingResult {
-	r, _ := regexp.Compile("^[0-9]{15}$")
+	r, _ := regexp.Compile("^[0-9]{15,16}$")
 	if !r.MatchString(id) {
 		return MarketplaceListingResult{
 			Error: "Error parsing Marketplace listing ID",
