@@ -5,10 +5,13 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
 func main() {
-	cmd := exec.Command("curl", 
+	// Fetch the HTML content using curl
+	cmd := exec.Command("curl",
 		"https://www.ebay.ca/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=ipad&_sacat=0&_odkw=asdasdasdas&_osacat=0",
 		"--compressed",
 		"-H", "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:134.0) Gecko/20100101 Firefox/134.0",
@@ -37,12 +40,44 @@ func main() {
 		return
 	}
 
-	outputFile := "ebay_result.html"
-	err = os.WriteFile(outputFile, out.Bytes(), 0644)
+	// Save HTML to a file for debugging
+	htmlFile := "ebay_result.html"
+	err = os.WriteFile(htmlFile, out.Bytes(), 0644)
 	if err != nil {
 		fmt.Printf("Error writing to file: %s\n", err)
 		return
 	}
 
-	fmt.Printf("HTML output saved to %s\n", outputFile)
+	// Parse the HTML content
+	doc, err := goquery.NewDocumentFromReader(&out)
+	if err != nil {
+		fmt.Printf("Error parsing HTML: %s\n", err)
+		return
+	}
+
+	// Open an output file for saving results
+	outputFile := "ebay_results_parsed.txt"
+	file, err := os.Create(outputFile)
+	if err != nil {
+		fmt.Printf("Error creating output file: %s\n", err)
+		return
+	}
+	defer file.Close()
+
+	// Extract title, price, and link
+	doc.Find(".s-item").Each(func(index int, item *goquery.Selection) {
+		title := item.Find(".s-item__title").Text()
+		link, _ := item.Find(".s-item__link").Attr("href")
+		price := item.Find(".s-item__price").Text()
+
+		if title != "" && link != "" && price != "" {
+			result := fmt.Sprintf("Title: %s\nLink: %s\nPrice: %s\n\n", title, link, price)
+			_, err := file.WriteString(result)
+			if err != nil {
+				fmt.Printf("Error writing result: %s\n", err)
+			}
+		}
+	})
+
+	fmt.Printf("Scraping complete. Results saved in %s\n", outputFile)
 }
