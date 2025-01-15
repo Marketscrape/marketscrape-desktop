@@ -44,8 +44,8 @@ const resetListing = () => {
       <div v-if="error">
         {{ error }}
       </div>
-      <div v-else>
-        <Button @click="resetListing">
+      <div v-else class="grid grid-flow-row gap-8">
+        <Button @click="resetListing" class="w-fit">
           <ArrowLeft />
           Go Back
         </Button>
