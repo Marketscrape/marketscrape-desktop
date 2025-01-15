@@ -14,12 +14,27 @@ import (
 	"github.com/iunary/fakeuseragent"
 )
 
-// App struct
+// ---------------------------------------------------------
+// SECTION: App
+// ---------------------------------------------------------
 type App struct {
 	ctx context.Context
 }
 
-// Marketplace listing struct
+// NewApp creates a new App application struct
+func NewApp() *App {
+	return &App{}
+}
+
+// startup is called when the app starts. The context is saved
+// so we can call the runtime methods
+func (a *App) startup(ctx context.Context) {
+	a.ctx = ctx
+}
+
+// ---------------------------------------------------------
+// SECTION: Base struct, also applies to Products
+// ---------------------------------------------------------
 type Root struct {
 	ProductDetailsType                 string                             `json:"product_details_type"`
 	Target                             Target                             `json:"target"`
@@ -37,6 +52,7 @@ type Target struct {
 	CreationTime        int64              `json:"creation_time"`
 	AttributeData       []Attribute        `json:"attribute_data"`
 	CommerceData        Commerce           `json:"commerce_badges_info"`
+	VehicleData         *VehicleData       `json:"vehicle_data,omitempty"`
 }
 
 type ListingPhoto struct {
@@ -98,15 +114,48 @@ type TaxonomyPathItem struct {
 	SEOInfo SEOInfo `json:"seo_info"`
 }
 
-// NewApp creates a new App application struct
-func NewApp() *App {
-	return &App{}
+// ---------------------------------------------------------
+// SECTION: Vehicles struct
+// ---------------------------------------------------------
+type VehicleData struct {
+	VehicleCarfaxReport                 any                   `json:"vehicle_carfax_report"`
+	VehicleCondition                    any                   `json:"vehicle_condition"`
+	VehicleExteriorColor                string                `json:"vehicle_exterior_color"`
+	VehicleFeatures                     []any                 `json:"vehicle_features"`
+	VehicleFuelType                     any                   `json:"vehicle_fuel_type"`
+	VehicleIdentificationNumber         any                   `json:"vehicle_identification_number"`
+	VehicleInteriorColor                string                `json:"vehicle_interior_color"`
+	VehicleIsPaidOff                    any                   `json:"vehicle_is_paid_off"`
+	VehicleMakeDisplayName              string                `json:"vehicle_make_display_name"`
+	VehicleModelDisplayName             string                `json:"vehicle_model_display_name"`
+	VehicleNumberOfOwners               any                   `json:"vehicle_number_of_owners"`
+	VehicleOdometerData                 VehicleOdometerData   `json:"vehicle_odometer_data"`
+	VehicleRegistrationPlateInformation any                   `json:"vehicle_registration_plate_information"`
+	VehicleSellerType                   string                `json:"vehicle_seller_type"`
+	VehicleSpecifications               VehicleSpecifications `json:"vehicle_specifications"`
+	VehicleTitleStatus                  any                   `json:"vehicle_title_status"`
+	VehicleTransmissionType             string                `json:"vehicle_transmission_type"`
+	VehicleTrimDisplayName              any                   `json:"vehicle_trim_display_name"`
+	VehicleWebsiteLink                  any                   `json:"vehicle_website_link"`
 }
 
-// startup is called when the app starts. The context is saved
-// so we can call the runtime methods
-func (a *App) startup(ctx context.Context) {
-	a.ctx = ctx
+type VehicleOdometerData struct {
+	Unit  string `json:"unit"`
+	Value int    `json:"value"`
+}
+
+type VehicleSpecifications struct {
+	Co2Emissions            any `json:"co2_emissions"`
+	EngineSize              any `json:"engine_size"`
+	GasMileageCity          any `json:"gas_mileage_city"`
+	GasMileageCombined      any `json:"gas_mileage_combined"`
+	GasMileageHighway       any `json:"gas_mileage_highway"`
+	HorsePower              any `json:"horse_power"`
+	SafetyRatingFront       any `json:"safety_rating_front"`
+	SafetyRatingOverall     any `json:"safety_rating_overall"`
+	SafetyRatingRollover    any `json:"safety_rating_rollover"`
+	SafetyRatingSide        any `json:"safety_rating_side"`
+	SafetyRatingSideBarrier any `json:"safety_rating_side_barrier"`
 }
 
 func GetFieldAsMap(field string, jsonObj map[string]interface{}) (map[string]interface{}, error) {
@@ -142,6 +191,27 @@ func ParseMarketplaceListing(rawJson map[string]interface{}) (*Root, error) {
 	err = json.Unmarshal(pageBytes, &root)
 	if err != nil {
 		return nil, fmt.Errorf("error unmarshalling to Root struct: %w", err)
+	}
+
+	// We're dealing with a vehicle
+	if root.ProductDetailsType == "AUTOS_VEHICLE" {
+		target, err := GetFieldAsMap("target", marketplaceProductDetailsPage)
+		if err != nil {
+			return nil, fmt.Errorf("error accessing 'viewer': %w", err)
+		}
+
+		targetBytes, err := json.Marshal(target)
+		if err != nil {
+			return nil, err
+		}
+
+		var vehicle VehicleData
+		err = json.Unmarshal(targetBytes, &vehicle)
+		if err != nil {
+			return nil, err
+		}
+
+		root.Target.VehicleData = &vehicle
 	}
 
 	return &root, nil
