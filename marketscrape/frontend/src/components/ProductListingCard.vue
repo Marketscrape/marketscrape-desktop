@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,16 +9,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
+import { computed } from "vue";
 
-import { MapPin, Tag, Clock, Image as ImageIcon } from "lucide-vue-next";
+import { Clock, Image as ImageIcon, MapPin, Tag } from "lucide-vue-next";
 
-import ImageGallery from "./ImageGallery.vue";
-import { cn, toTitleCase, capitalizeFirstLetter } from "@/lib/utils";
+import { capitalizeFirstLetter, toTitleCase } from "@/lib/utils";
 import { formatDistanceToNow } from "date-fns";
+import ImageGallery from "./ImageGallery.vue";
 
 const props = defineProps<{
   listing: any;
@@ -56,10 +56,11 @@ const creationTime = computed(() =>
       </CardDescription>
     </CardHeader>
     <CardContent class="space-y-4">
-      <p>
+      <p class="whitespace-pre-wrap">
         {{ listing.target.redacted_description.text }}
       </p>
       <Separator />
+
       <div class="grid grid-flow-row text-sm text-muted-foreground gap-1">
         <div class="flex items-center space-x-1">
           <Tag class="h-4 w-4" />
