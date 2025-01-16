@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import { computed } from "vue";
 
 import { Clock, Image as ImageIcon, MapPin, Tag } from "lucide-vue-next";
 
@@ -61,28 +60,28 @@ const { creationTime, filteredCategories, formatPrice } =
 
       <Separator />
 
-      <div class="grid grid-flow-row text-sm text-muted-foreground gap-1">
+      <div class="grid grid-flow-row text-sm gap-1">
         <div class="flex items-center space-x-1">
-          <Tag class="h-4 w-4" />
+          <Tag class="h-4 w-4 text-muted-foreground" />
           <span>{{ listing.target.attribute_data[0].label }}</span>
         </div>
         <div class="flex items-center space-x-1">
-          <Clock class="h-4 w-4" />
+          <Clock class="h-4 w-4 text-muted-foreground" />
           <span>{{ capitalizeFirstLetter(creationTime) }}</span>
-        </div>
-        <div class="flex items-center space-x-1">
-          <MapPin class="h-4 w-4" />
-          <span>{{ listing.target.location_text.text }}</span>
         </div>
       </div>
 
       <Separator />
     </CardContent>
-    <CardFooter class="flex justify-end">
+    <CardFooter class="flex justify-between">
+      <div class="flex items-center space-x-2 text-sm text-muted-foreground">
+        <MapPin class="h-4 w-4" />
+        <span>{{ listing.target.location_text.text }}</span>
+      </div>
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline" size="sm">
-            <ImageIcon class="h-4 w-4" />
+            <ImageIcon class="h-4 w-4 mr-2" />
             Image Gallery
           </Button>
         </DialogTrigger>

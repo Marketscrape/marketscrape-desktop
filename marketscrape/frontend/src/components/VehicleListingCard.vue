@@ -161,37 +161,6 @@ const { creationTime, filteredCategories, formatPrice } =
 
       <Separator />
 
-      <div v-if="hasSpecifications" class="space-y-2">
-        <h4 class="font-semibold">Specifications</h4>
-        <div class="grid grid-cols-2 gap-2 text-sm">
-          <div v-if="vehicleData.vehicle_specifications.engine_size">
-            Engine: {{ vehicleData.vehicle_specifications.engine_size }}
-          </div>
-          <div v-if="vehicleData.vehicle_specifications.horse_power">
-            Horsepower: {{ vehicleData.vehicle_specifications.horse_power }}
-          </div>
-          <div v-if="vehicleData.vehicle_specifications.gas_mileage_city">
-            City MPG: {{ vehicleData.vehicle_specifications.gas_mileage_city }}
-          </div>
-          <div v-if="vehicleData.vehicle_specifications.gas_mileage_highway">
-            Highway MPG:
-            {{ vehicleData.vehicle_specifications.gas_mileage_highway }}
-          </div>
-          <div v-if="vehicleData.vehicle_specifications.gas_mileage_combined">
-            Combined MPG:
-            {{ vehicleData.vehicle_specifications.gas_mileage_combined }}
-          </div>
-          <div v-if="vehicleData.vehicle_specifications.co2_emissions">
-            CO2 Emissions:
-            {{ vehicleData.vehicle_specifications.co2_emissions }}
-          </div>
-          <div v-if="vehicleData.vehicle_specifications.safety_rating_overall">
-            Safety Rating:
-            {{ vehicleData.vehicle_specifications.safety_rating_overall }}
-          </div>
-        </div>
-      </div>
-
       <div
         v-if="
           vehicleData.vehicle_features && vehicleData.vehicle_features.length
