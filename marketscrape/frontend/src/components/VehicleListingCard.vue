@@ -25,7 +25,11 @@ import {
   Cog,
 } from "lucide-vue-next";
 
-import { capitalizeFirstLetter, toTitleCase } from "@/lib/utils";
+import {
+  capitalizeFirstLetter,
+  toTitleCase,
+  useListingUtils,
+} from "@/lib/utils";
 import { formatDistanceToNow } from "date-fns";
 import ImageGallery from "./ImageGallery.vue";
 import { main } from "./../../wailsjs/go/models";
@@ -46,20 +50,7 @@ const props = defineProps<{
   listing: any;
 }>();
 
-const creationTime = computed(() =>
-  formatDistanceToNow(new Date(props.listing.target.creation_time * 1000), {
-    addSuffix: true,
-  }),
-);
-
 const vehicleData = computed(() => props.listing.target.vehicle_data);
-
-const filteredCategories = computed(() =>
-  props.listing.marketplace_listing_renderable_target.seo_virtual_category.taxonomy_path.filter(
-    (category: main.TaxonomyPathItem) =>
-      category.seo_info.seo_url.trim() !== "",
-  ),
-);
 
 const formattedOdometer = computed(() => {
   const odometerData = vehicleData.value.vehicle_odometer_data;
@@ -73,20 +64,8 @@ const hasSpecifications = computed(() => {
   return specs && Object.values(specs).some((value) => value !== null);
 });
 
-const formatPrice = computed(() => {
-  const { amount, currency } = props.listing.target.listing_price;
-
-  if (!amount || !currency) {
-    return "";
-  }
-
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency,
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  }).format(parseFloat(amount));
-});
+const { creationTime, filteredCategories, formatPrice } =
+  useListingUtils(props);
 </script>
 
 <template>
@@ -100,16 +79,17 @@ const formatPrice = computed(() => {
           {{ formatPrice }}
         </div>
       </CardTitle>
-      <CardDescription class="space-y-2">
-        <div class="space-x-1">
-          <Badge
-            v-for="category in filteredCategories"
-            :key="category.id"
-            class="text-xs"
-          >
-            {{ toTitleCase(category.seo_info.seo_url.replace("-", " ")) }}
-          </Badge>
-        </div>
+      <CardDescription
+        v-if="filteredCategories?.length"
+        class="space-y-2 space-x-1"
+      >
+        <Badge
+          v-for="category in filteredCategories"
+          :key="category.id"
+          class="text-xs"
+        >
+          {{ toTitleCase(category.seo_info.seo_url.replace("-", " ")) }}
+        </Badge>
       </CardDescription>
     </CardHeader>
     <CardContent class="space-y-4">
