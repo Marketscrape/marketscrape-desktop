@@ -18,6 +18,7 @@ import { Clock, Image as ImageIcon, MapPin, Tag } from "lucide-vue-next";
 import { capitalizeFirstLetter, toTitleCase } from "@/lib/utils";
 import { formatDistanceToNow } from "date-fns";
 import ImageGallery from "./ImageGallery.vue";
+import { main } from "./../../wailsjs/go/models";
 
 const props = defineProps<{
   listing: any;
@@ -28,6 +29,28 @@ const creationTime = computed(() =>
     addSuffix: true,
   }),
 );
+
+const filteredCategories = computed(() =>
+  props.listing.marketplace_listing_renderable_target.seo_virtual_category.taxonomy_path.filter(
+    (category: main.TaxonomyPathItem) =>
+      category.seo_info.seo_url.trim() !== "",
+  ),
+);
+
+const formatPrice = computed(() => {
+  const { amount, currency } = props.listing.target.listing_price;
+
+  if (!amount || !currency) {
+    return "";
+  }
+
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(parseFloat(amount));
+});
 </script>
 
 <template>
@@ -35,19 +58,15 @@ const creationTime = computed(() =>
     <CardHeader>
       <CardTitle class="space-y-1">
         <div class="text-xl font-semibold leading-none tracking-tight">
-          {{
-            listing.marketplace_listing_renderable_target
-              .marketplace_listing_title
-          }}
+          {{ listing.target.marketplace_listing_title }}
         </div>
         <div>
-          {{ listing.target.listing_price.formatted_amount_zeros_stripped }}
+          {{ formatPrice }}
         </div>
       </CardTitle>
       <CardDescription class="space-x-1">
         <Badge
-          v-for="category in listing.marketplace_listing_renderable_target
-            .seo_virtual_category.taxonomy_path"
+          v-for="category in filteredCategories"
           :key="category.id"
           class="text-xs"
         >
