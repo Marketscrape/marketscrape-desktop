@@ -54,10 +54,6 @@ const creationTime = computed(() =>
 
 const vehicleData = computed(() => props.listing.target.vehicle_data);
 
-const vehicleFullName = computed(() =>
-  `${vehicleData.value.vehicle_make_display_name} ${vehicleData.value.vehicle_model_display_name} ${vehicleData.value.vehicle_trim_display_name || ""}`.trim(),
-);
-
 const filteredCategories = computed(() =>
   props.listing.marketplace_listing_renderable_target.seo_virtual_category.taxonomy_path.filter(
     (category: main.TaxonomyPathItem) =>
@@ -120,13 +116,18 @@ const formatPrice = computed(() => {
       <p class="whitespace-pre-wrap">
         {{ listing.target.redacted_description.text }}
       </p>
+
       <Separator />
 
       <div class="grid grid-cols-2 gap-4 text-sm">
         <div class="space-y-2">
           <div class="flex items-center space-x-2">
             <Car class="h-4 w-4 text-muted-foreground" />
-            <span>{{ vehicleFullName }}</span>
+            <span>
+              {{ vehicleData.vehicle_make_display_name }}
+              {{ vehicleData.vehicle_model_display_name }}
+              {{ vehicleData.vehicle_trim_display_name }}
+            </span>
           </div>
           <div class="flex items-center space-x-2">
             <Gauge class="h-4 w-4 text-muted-foreground" />
