@@ -78,6 +78,7 @@ const formatPrice = computed(() => {
       <p class="whitespace-pre-wrap">
         {{ listing.target.redacted_description.text }}
       </p>
+
       <Separator />
 
       <div class="grid grid-flow-row text-sm text-muted-foreground gap-1">
@@ -94,6 +95,8 @@ const formatPrice = computed(() => {
           <span>{{ listing.target.location_text.text }}</span>
         </div>
       </div>
+
+      <Separator />
     </CardContent>
     <CardFooter class="flex justify-end">
       <Dialog>
