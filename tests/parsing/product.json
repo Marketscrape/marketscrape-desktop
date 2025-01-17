@@ -1,0 +1,346 @@
+{
+  "__isMarketplaceProductDetailsPage": "MarketplaceForSaleItemProductDetailsPage",
+  "__module_component_MarketplacePDP_page": {
+    "__dr": "MarketplacePDPForSaleComponent.react"
+  },
+  "__module_operation_MarketplacePDP_page": {
+    "__dr": "MarketplacePDPForSaleComponent_page$normalization.graphql"
+  },
+  "__typename": "MarketplaceForSaleItemProductDetailsPage",
+  "id": "66:584019364126546:IN_MEMORY_MARKETPLACE_PRODUCT_DETAILS_PAGE:MarketplaceC2CProductDetailsPage",
+  "marketplace_listing_renderable_target": {
+    "__isMarketplaceListingRenderable": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithPersonalization": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithSweepstake": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithVariants": "GroupCommerceProductItem",
+    "__typename": "GroupCommerceProductItem",
+    "base_marketplace_listing_title": "Linde Werdelin Oktopus II Limited Edition",
+    "id": "584019364126546",
+    "is_shipping_offered": false,
+    "location": {
+      "latitude": 48.430480957031,
+      "longitude": -123.35998535156
+    },
+    "marketplace_listing_title": "Linde Werdelin Oktopus II Limited Edition",
+    "personalization_info": null,
+    "product_item": {
+      "id": "9176247489072294"
+    },
+    "seo_virtual_category": {
+      "id": "314374256203015",
+      "taxonomy_path": [
+        {
+          "id": "677457442746983",
+          "seo_info": {
+            "id": "2626320500744915",
+            "seo_url": "apparel"
+          }
+        },
+        {
+          "id": "204072773965300",
+          "seo_info": {
+            "id": "2864849070228475",
+            "seo_url": "jewelry"
+          }
+        },
+        {
+          "id": "314374256203015",
+          "seo_info": {
+            "id": "2431924993574202",
+            "seo_url": "watches"
+          }
+        }
+      ]
+    },
+    "shop_on_mp_item": null,
+    "sweepstake_enabled": false
+  },
+  "product_details_type": "FOR_SALE_ITEM",
+  "target": {
+    "__isGroupCommerceProductItemIsDeprecated": "GroupCommerceProductItem",
+    "__isMarketplaceListingHideableFromFriends": "GroupCommerceProductItem",
+    "__isMarketplaceListingRenderable": "GroupCommerceProductItem",
+    "__isMarketplaceListingSellerNotices": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithBadges": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithCheckoutOffers": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithChildListings": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithComparablePrice": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithDeliveryOptions": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithDiscounts": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithEmailCommunication": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithIntegrityStatus": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithSweepstake": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithVacationMode": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithVariants": "GroupCommerceProductItem",
+    "__isMarketplaceMessageable": "GroupCommerceProductItem",
+    "__isMarketplaceVehicleListing": "GroupCommerceProductItem",
+    "__typename": "GroupCommerceProductItem",
+    "active_order": null,
+    "all_message_threads": {
+      "is_empty": true
+    },
+    "attribute_data": [
+      {
+        "attribute_name": "Condition",
+        "label": "Used - like new",
+        "value": "used_like_new"
+      },
+      {
+        "attribute_name": "Material",
+        "label": "Titanium",
+        "value": "Titanium"
+      },
+      {
+        "attribute_name": "Gemstone",
+        "label": "Sapphire",
+        "value": "Sapphire"
+      }
+    ],
+    "base_marketplace_listing_title": "Linde Werdelin Oktopus II Limited Edition",
+    "c2c_shipping_eligible": false,
+    "can_buyer_make_checkout_offer": false,
+    "can_seller_change_availability": false,
+    "can_seller_edit": false,
+    "can_share": true,
+    "commerce_badges_info": {
+      "badges": [],
+      "source_summary": null
+    },
+    "comparable_price": null,
+    "comparable_price_type": null,
+    "creation_time": 1732416832,
+    "cross_post_info": {
+      "all_listings": [
+        {
+          "__typename": "GroupCommerceProductItem",
+          "id": "584019364126546",
+          "is_on_marketplace": true
+        }
+      ]
+    },
+    "default_variant_listing": null,
+    "delivery_data": {
+      "carrier": null,
+      "delivery_address": null
+    },
+    "delivery_types": ["IN_PERSON"],
+    "discounts_text": null,
+    "estimated_delivery_window": null,
+    "fi_enhanced_appeal_data": {
+      "use_fi_appeals": true
+    },
+    "first_message_suggested_value": null,
+    "formattedShippingPriceListWithZipcode": [],
+    "formatted_shipping_price": null,
+    "formatted_shipping_price_list_price_only": [],
+    "has_children": false,
+    "has_free_shipping_discounts": false,
+    "hidden_from_friends": "VISIBLE_TO_EVERYONE",
+    "id": "584019364126546",
+    "if_should_show_complementary_listings": null,
+    "if_should_show_recommended_listings": null,
+    "incentive_campaign_for_free_shipping": null,
+    "inventory_count": null,
+    "is_buy_now_enabled": false,
+    "is_cart_enabled": false,
+    "is_checkout_enabled": false,
+    "is_draft": false,
+    "is_email_communication_enabled": false,
+    "is_hidden": false,
+    "is_live": true,
+    "is_multi_variant_listing": false,
+    "is_on_marketplace": true,
+    "is_pending": false,
+    "is_purchase_protected": false,
+    "is_seller_business_onboarded": false,
+    "is_shipping_offered": false,
+    "is_sold": false,
+    "is_viewer_seller": false,
+    "item_location": {
+      "latitude": 48.430480957031,
+      "longitude": -123.35998535156
+    },
+    "legal_disclosure_impressum_url": null,
+    "legal_reporting_cta_type": null,
+    "legal_reporting_uri": null,
+    "listing_inventory_type": "SINGLE_QUANTITY",
+    "listing_is_rejected": false,
+    "listing_photos": [
+      {
+        "__typename": "ProductImage",
+        "accessibility_caption": "No photo description available.",
+        "id": "950565253594382",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t45.5328-4/468032110_950565256927715_175798229307683222_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=104&ccb=1-7&_nc_sid=247b10&_nc_ohc=CJmM32wPpdwQ7kNvgFyKCe8&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AdN1Q-UDE9CgDWNV6jo4z68&oh=00_AYBkMn-__tmBEtyYyiw5bFdLr-NYxkNO1Q3iOym700TH0A&oe=678C9932",
+          "width": 720
+        }
+      },
+      {
+        "__typename": "ProductImage",
+        "accessibility_caption": "No photo description available.",
+        "id": "1246982956542353",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t45.5328-4/468111954_1246982959875686_4803039556891521203_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=100&ccb=1-7&_nc_sid=247b10&_nc_ohc=d_rsxqL08aAQ7kNvgFqNMut&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AdN1Q-UDE9CgDWNV6jo4z68&oh=00_AYCvUZMq8O1_0Uwsz4VHpK2LLq3dNJb0pHJWpLrj-wwIPg&oe=678C9A44",
+          "width": 720
+        }
+      },
+      {
+        "__typename": "ProductImage",
+        "accessibility_caption": "No photo description available.",
+        "id": "1082904123624860",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t45.5328-4/468189714_1082904126958193_6872302507034479491_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=105&ccb=1-7&_nc_sid=247b10&_nc_ohc=lVha8j1t1ygQ7kNvgHRdexJ&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AdN1Q-UDE9CgDWNV6jo4z68&oh=00_AYBSJRzvhHtw6vIMF24M0WUXquGQZlhIkkvbl_uljHWg1w&oe=678CA3A6",
+          "width": 720
+        }
+      },
+      {
+        "__typename": "ProductImage",
+        "accessibility_caption": "No photo description available.",
+        "id": "2319186185103301",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t45.5328-4/468079126_2319186188436634_7166869186782616373_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=107&ccb=1-7&_nc_sid=247b10&_nc_ohc=bDGUR4uU1U0Q7kNvgF5Yggc&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AdN1Q-UDE9CgDWNV6jo4z68&oh=00_AYCE66fvIAySmRnK9IZzFxrNYX40jwxcM2yTatmdHpB15A&oe=678C98E9",
+          "width": 719
+        }
+      }
+    ],
+    "listing_price": {
+      "amount": "13000.00",
+      "amount_with_offset_in_currency": "902638",
+      "currency": "CAD",
+      "formatted_amount_zeros_stripped": "CA$13,000"
+    },
+    "listing_seller_notices": [],
+    "location": {
+      "latitude": 48.430480957031,
+      "longitude": -123.35998535156
+    },
+    "location_text": {
+      "text": "Victoria, BC"
+    },
+    "location_vanity_or_id": "victoria",
+    "marketplaceListingRenderableIfLoggedOut": {
+      "__isMarketplaceListingRenderable": "GroupCommerceProductItem",
+      "__isMarketplaceListingWithTaxonomy": "GroupCommerceProductItem",
+      "__typename": "GroupCommerceProductItem",
+      "id": "584019364126546",
+      "marketplace_listing_category": {
+        "id": "214968118845643",
+        "slug": "jewelry"
+      },
+      "marketplace_listing_category_name": "Jewelry & Accessories",
+      "seo_virtual_category": {
+        "id": "314374256203015",
+        "taxonomy_path": [
+          {
+            "id": "677457442746983",
+            "name": "Apparel",
+            "seo_info": {
+              "id": "2626320500744915",
+              "seo_url": "apparel"
+            }
+          },
+          {
+            "id": "204072773965300",
+            "name": "Jewelry & Accessories",
+            "seo_info": {
+              "id": "2864849070228475",
+              "seo_url": "jewelry"
+            }
+          },
+          {
+            "id": "314374256203015",
+            "name": "Watches",
+            "seo_info": {
+              "id": "2431924993574202",
+              "seo_url": "watches"
+            }
+          }
+        ]
+      }
+    },
+    "marketplace_bump_info": null,
+    "marketplace_hashtags": {
+      "nodes": []
+    },
+    "marketplace_listing_category_id": "214968118845643",
+    "marketplace_listing_seller": null,
+    "marketplace_listing_title": "Linde Werdelin Oktopus II Limited Edition",
+    "messagingEnabled": true,
+    "messaging_enabled": true,
+    "most_recent_active_order_as_buyer": null,
+    "order_summaries": [],
+    "origin_group": null,
+    "pre_recorded_videos": [],
+    "primary_listing_photo": {
+      "__typename": "ProductImage",
+      "id": "950565253594382",
+      "listing_image": {
+        "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t45.5328-4/468032110_950565256927715_175798229307683222_n.jpg?stp=c0.22.133.133a_dst-jpg_p133x133_tt6&_nc_cat=104&ccb=1-7&_nc_sid=247b10&_nc_ohc=CJmM32wPpdwQ7kNvgFyKCe8&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AdN1Q-UDE9CgDWNV6jo4z68&oh=00_AYB5sdUCFvf-2_w6kq9O4fZbipi4hoi0NW6faYrhe6JuTw&oe=678C9932"
+      }
+    },
+    "primary_mp_ent": {
+      "__typename": "GroupCommerceProductItem",
+      "id": "584019364126546"
+    },
+    "product_item": {
+      "boosted_marketplace_listing": null,
+      "id": "9176247489072294",
+      "promoted_listing": null,
+      "viewer_purchase_limit": -1
+    },
+    "rebuy_order_receipt": null,
+    "redacted_description": {
+      "text": "Linde Werdelin Oktopus\nII Limited Edition 88"
+    },
+    "reportable_ent_id": "9176247489072294",
+    "seller_cms": null,
+    "seller_message_thread": null,
+    "shipping_label_rate_type": null,
+    "shipping_offered": false,
+    "shipping_profile": null,
+    "should_hide_pdp_shipping_content": true,
+    "should_show_txn_survey_on_mas": false,
+    "story": null,
+    "strikethrough_price": null,
+    "sweepstake_content": null,
+    "sweepstake_enabled": false,
+    "sweepstake_status": "INVALID",
+    "vacation_mode": null,
+    "variant_group": null,
+    "vehicle_seller_type": null
+  },
+  "ufi_renderer": null,
+  "viewer": {
+    "__typename": "Viewer",
+    "basic_marketplace_standard_user_outside_dma_jurisdiction": true,
+    "bsg_suppression_holdout_marketplace_cvds": {
+      "if_viewer_can_xpost_from_bsg_to_mp": {
+        "__typename": "XFBBSGSuppressionHoldoutMarketplaceCVDs"
+      }
+    },
+    "marketplace_actor_with_integrity_status": {
+      "can_crosspost_to_mp": true,
+      "marketplace_user_in_dma": false
+    },
+    "marketplace_nux_states": {
+      "mbl_www_post_publish_nux_state": "NOT_VISIBLE",
+      "mbl_www_selling_view_nux_state": "NOT_VISIBLE"
+    },
+    "marketplace_settings": {
+      "buy_location": {
+        "latitude": 37.7793,
+        "longitude": -122.419
+      },
+      "current_marketplace": {
+        "__typename": "Marketplace",
+        "id": "1759579680997030"
+      },
+      "custom_initial_message": null,
+      "search_radius": 65
+    }
+  }
+}

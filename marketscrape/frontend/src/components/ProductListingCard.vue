@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,26 +9,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
 
-import { MapPin, Tag, Clock, Image as ImageIcon } from "lucide-vue-next";
+import { Clock, Image as ImageIcon, MapPin, Tag } from "lucide-vue-next";
 
+import {
+  capitalizeFirstLetter,
+  toTitleCase,
+  useListingUtils,
+} from "@/lib/utils";
 import ImageGallery from "./ImageGallery.vue";
-import { cn, toTitleCase, capitalizeFirstLetter } from "@/lib/utils";
-import { formatDistanceToNow } from "date-fns";
 
 const props = defineProps<{
   listing: any;
 }>();
 
-const creationTime = computed(() =>
-  formatDistanceToNow(new Date(props.listing.target.creation_time * 1000), {
-    addSuffix: true,
-  }),
-);
+const { creationTime, filteredCategories, formatPrice } =
+  useListingUtils(props);
 </script>
 
 <template>
@@ -35,19 +34,18 @@ const creationTime = computed(() =>
     <CardHeader>
       <CardTitle class="space-y-1">
         <div class="text-xl font-semibold leading-none tracking-tight">
-          {{
-            listing.marketplace_listing_renderable_target
-              .marketplace_listing_title
-          }}
+          {{ listing.target.marketplace_listing_title }}
         </div>
         <div>
-          {{ listing.target.listing_price.formatted_amount_zeros_stripped }}
+          {{ formatPrice }}
         </div>
       </CardTitle>
-      <CardDescription class="space-x-1">
+      <CardDescription
+        v-if="filteredCategories?.length"
+        class="space-y-2 space-x-2"
+      >
         <Badge
-          v-for="category in listing.marketplace_listing_renderable_target
-            .seo_virtual_category.taxonomy_path"
+          v-for="category in filteredCategories"
           :key="category.id"
           class="text-xs"
         >
@@ -56,26 +54,30 @@ const creationTime = computed(() =>
       </CardDescription>
     </CardHeader>
     <CardContent class="space-y-4">
-      <p>
+      <p class="whitespace-pre-wrap">
         {{ listing.target.redacted_description.text }}
       </p>
+
       <Separator />
-      <div class="grid grid-flow-row text-sm text-muted-foreground gap-1">
-        <div class="flex items-center space-x-1">
-          <Tag class="h-4 w-4" />
+
+      <div class="grid grid-flow-row text-sm gap-1">
+        <div class="flex items-center">
+          <Tag class="h-4 w-4 text-muted-foreground mr-2" />
           <span>{{ listing.target.attribute_data[0].label }}</span>
         </div>
-        <div class="flex items-center space-x-1">
-          <Clock class="h-4 w-4" />
+        <div class="flex items-center">
+          <Clock class="h-4 w-4 text-muted-foreground mr-2" />
           <span>{{ capitalizeFirstLetter(creationTime) }}</span>
         </div>
-        <div class="flex items-center space-x-1">
-          <MapPin class="h-4 w-4" />
-          <span>{{ listing.target.location_text.text }}</span>
-        </div>
       </div>
+
+      <Separator />
     </CardContent>
-    <CardFooter class="flex justify-end">
+    <CardFooter class="flex justify-between">
+      <div class="flex items-center text-sm text-muted-foreground">
+        <MapPin class="h-4 w-4 mr-2" />
+        <span>{{ listing.target.location_text.text }}</span>
+      </div>
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline" size="sm">

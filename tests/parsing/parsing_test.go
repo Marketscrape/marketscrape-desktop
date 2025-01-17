@@ -1,44 +1,17 @@
-package main
+package parsing
 
 import (
-	"context"
-	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/http"
-	"net/url"
-	"regexp"
-	"strings"
-
-	"github.com/iunary/fakeuseragent"
+	"os"
+	"testing"
 )
 
-// ---------------------------------------------------------
-// SECTION: App
-// ---------------------------------------------------------
-type App struct {
-	ctx context.Context
-}
-
-// NewApp creates a new App application struct
-func NewApp() *App {
-	return &App{}
-}
-
-// startup is called when the app starts. The context is saved
-// so we can call the runtime methods
-func (a *App) startup(ctx context.Context) {
-	a.ctx = ctx
-}
-
-// ---------------------------------------------------------
-// SECTION: Base struct, also applies to Products
-// ---------------------------------------------------------
 type Root struct {
 	ProductDetailsType                 string                             `json:"product_details_type"`
 	Target                             Target                             `json:"target"`
-	MarketplaceListingRenderableTarget MarketplaceListingRenderableTarget `json:"marketplace_listing_renderable_target,omitempty"`
+	MarketplaceListingRenderableTarget MarketplaceListingRenderableTarget `json:"marketplace_listing_renderable_target"`
 }
 
 type Target struct {
@@ -114,9 +87,6 @@ type TaxonomyPathItem struct {
 	SEOInfo SEOInfo `json:"seo_info"`
 }
 
-// ---------------------------------------------------------
-// SECTION: Vehicles struct
-// ---------------------------------------------------------
 type VehicleData struct {
 	VehicleCarfaxReport                 any                   `json:"vehicle_carfax_report"`
 	VehicleCondition                    any                   `json:"vehicle_condition"`
@@ -166,36 +136,32 @@ func GetFieldAsMap(field string, jsonObj map[string]interface{}) (map[string]int
 	return jsonField, nil
 }
 
-func ParseMarketplaceListing(rawJson map[string]interface{}) (*Root, error) {
-	data, err := GetFieldAsMap("data", rawJson)
+func ParseMarketplaceListing(filename string) (*Root, error) {
+	jsonFile, err := os.Open(filename)
 	if err != nil {
-		return nil, fmt.Errorf("error accessing 'data': %w", err)
+		return nil, err
 	}
+	defer jsonFile.Close()
 
-	viewer, err := GetFieldAsMap("viewer", data)
+	bytesValue, err := io.ReadAll(jsonFile)
 	if err != nil {
-		return nil, fmt.Errorf("error accessing 'viewer': %w", err)
-	}
-
-	marketplaceProductDetailsPage, err := GetFieldAsMap("marketplace_product_details_page", viewer)
-	if err != nil {
-		return nil, fmt.Errorf("error accessing 'marketplace_product_details_page': %w", err)
-	}
-
-	pageBytes, err := json.Marshal(marketplaceProductDetailsPage)
-	if err != nil {
-		return nil, fmt.Errorf("error marshalling 'marketplace_product_details_page': %w", err)
+		return nil, err
 	}
 
 	var root Root
-	err = json.Unmarshal(pageBytes, &root)
+	err = json.Unmarshal(bytesValue, &root)
 	if err != nil {
-		return nil, fmt.Errorf("error unmarshalling to Root struct: %w", err)
+		return nil, err
 	}
 
-	// We're dealing with a vehicle
 	if root.ProductDetailsType == "AUTOS_VEHICLE" {
-		target, err := GetFieldAsMap("target", marketplaceProductDetailsPage)
+		var rawJson map[string]interface{}
+		err = json.Unmarshal(bytesValue, &rawJson)
+		if err != nil {
+			return nil, fmt.Errorf("error unmarshalling response: %v", err)
+		}
+
+		target, err := GetFieldAsMap("target", rawJson)
 		if err != nil {
 			return nil, fmt.Errorf("error accessing 'viewer': %w", err)
 		}
@@ -217,67 +183,11 @@ func ParseMarketplaceListing(rawJson map[string]interface{}) (*Root, error) {
 	return &root, nil
 }
 
-type Response struct {
-	Data  *Root   `json:"data,omitempty"`
-	Error *string `json:"error,omitempty"`
-}
-
-func (a *App) GetMarketplaceListing(id string) (*Root, error) {
-	r, _ := regexp.Compile("^[0-9]{15,16}$")
-	if !r.MatchString(id) {
-		return nil, fmt.Errorf("invalid Marketplace listing ID: %s", id)
-	}
-
-	client := &http.Client{
-		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-		},
-	}
-
-	payload := url.Values{}
-	payload.Set("variables", fmt.Sprintf(`{"targetId":"%s"}`, id))
-	payload.Set("doc_id", "7616889011758848")
-
-	req, err := http.NewRequest("POST", "https://www.facebook.com/api/graphql/", strings.NewReader(payload.Encode()))
+func TestParseListing(t *testing.T) {
+	root, err := ParseMarketplaceListing("vehicle.json")
 	if err != nil {
-		return nil, fmt.Errorf("error creating request: %v", err)
+		t.Fatalf("Failed to parse vehicle listing: %v", err)
 	}
 
-	req.Header.Set("User-Agent", fakeuseragent.RandomUserAgent())
-	req.Header.Set("Accept", "*/*")
-	req.Header.Set("Accept-Language", "en-CA,en-US;q=0.7,en;q=0.3")
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("X-FB-Friendly-Name", "MarketplacePDPContainerQuery")
-	req.Header.Set("Origin", "https://www.facebook.com")
-	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Referer", "https://www.facebook.com/marketplace/?ref=app_tab")
-	req.Header.Set("Sec-Fetch-Dest", "empty")
-	req.Header.Set("Sec-Fetch-Mode", "cors")
-	req.Header.Set("Sec-Fetch-Site", "same-origin")
-	req.Header.Set("Priority", "u=1")
-	req.Header.Set("TE", "trailers")
-
-	res, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error performing request: %v", err)
-	}
-	defer res.Body.Close()
-
-	bodyBytes, err := io.ReadAll(res.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %v", err)
-	}
-
-	var rawJson map[string]interface{}
-	err = json.Unmarshal(bodyBytes, &rawJson)
-	if err != nil {
-		return nil, fmt.Errorf("error unmarshalling response: %v", err)
-	}
-
-	root, err := ParseMarketplaceListing(rawJson)
-	if err != nil {
-		return nil, fmt.Errorf("error parsing marketplace listing: %v", err)
-	}
-
-	return root, nil
+	fmt.Print(root.Target.VehicleData.VehicleOdometerData)
 }

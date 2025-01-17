@@ -1,0 +1,388 @@
+{
+  "__isMarketplaceProductDetailsPage": "MarketplaceVehicleProductDetailsPage",
+  "__module_component_MarketplacePDP_page": {
+    "__dr": "MarketplacePDPAutosComponent.react"
+  },
+  "__module_operation_MarketplacePDP_page": {
+    "__dr": "MarketplacePDPAutosComponent_page$normalization.graphql"
+  },
+  "__typename": "MarketplaceVehicleProductDetailsPage",
+  "id": "66:3157482384404603:IN_MEMORY_MARKETPLACE_PRODUCT_DETAILS_PAGE:MarketplaceVehicleProductDetailsPage",
+  "marketplace_listing_renderable_target": {
+    "__isMarketplaceListingRenderable": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithPersonalization": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithSweepstake": "GroupCommerceProductItem",
+    "__typename": "GroupCommerceProductItem",
+    "id": "3157482384404603",
+    "is_shipping_offered": false,
+    "location": {
+      "latitude": 48.457946777344,
+      "longitude": -123.35998535156
+    },
+    "personalization_info": null,
+    "seo_virtual_category": {
+      "id": "2503521333184546",
+      "taxonomy_path": [
+        {
+          "id": "546583916084032",
+          "seo_info": {
+            "id": "3019733194750346",
+            "seo_url": "vehicles"
+          }
+        },
+        {
+          "id": "2503521333184546",
+          "seo_info": null
+        }
+      ]
+    },
+    "sweepstake_enabled": false
+  },
+  "product_details_type": "AUTOS_VEHICLE",
+  "target": {
+    "__isGroupCommerceProductItemIsDeprecated": "GroupCommerceProductItem",
+    "__isMarketplaceListingHideableFromFriends": "GroupCommerceProductItem",
+    "__isMarketplaceListingRenderable": "GroupCommerceProductItem",
+    "__isMarketplaceListingSellerNotices": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithBadges": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithCheckoutOffers": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithChildListings": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithDeliveryOptions": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithEmailCommunication": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithIntegrityStatus": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithLeadGen": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithSweepstake": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithVacationMode": "GroupCommerceProductItem",
+    "__isMarketplaceListingWithVariants": "GroupCommerceProductItem",
+    "__isMarketplaceMessageable": "GroupCommerceProductItem",
+    "__isMarketplaceRealEstateListing": "GroupCommerceProductItem",
+    "__isMarketplaceVehicleListing": "GroupCommerceProductItem",
+    "__typename": "GroupCommerceProductItem",
+    "active_order": null,
+    "all_message_threads": {
+      "is_empty": true
+    },
+    "attribute_data": [],
+    "c2c_shipping_eligible": false,
+    "can_buyer_make_checkout_offer": false,
+    "can_seller_change_availability": false,
+    "can_seller_edit": false,
+    "can_share": true,
+    "commerce_badges_info": {
+      "badges": [
+        {
+          "__typename": "CommerceBadgeImpl",
+          "image_grayscale_uri": "https://static.xx.fbcdn.net/rsrc.php/v4/y0/r/vDFsgqQMCLN.png"
+        }
+      ],
+      "source_summary": "Highly rated on Marketplace"
+    },
+    "condition": "USED",
+    "creation_time": 1736797098,
+    "cross_post_info": {
+      "all_listings": [
+        {
+          "__typename": "GroupCommerceProductItem",
+          "id": "3157482384404603",
+          "is_on_marketplace": true
+        }
+      ]
+    },
+    "custom_title": "2023 Audi rs 5",
+    "dealership_name": null,
+    "default_variant_listing": null,
+    "delivery_types": ["IN_PERSON"],
+    "energy_efficiency_class_eu": null,
+    "fair_market_value_data": null,
+    "fi_enhanced_appeal_data": {
+      "use_fi_appeals": true
+    },
+    "first_message_suggested_value": null,
+    "formatted_price": {
+      "text": "CA$94,950"
+    },
+    "has_children": false,
+    "hidden_from_friends": "VISIBLE_TO_EVERYONE",
+    "id": "3157482384404603",
+    "incentive_campaign_for_free_shipping": null,
+    "inventory_count": null,
+    "is_buy_now_enabled": false,
+    "is_cart_enabled": false,
+    "is_checkout_enabled": false,
+    "is_draft": false,
+    "is_email_communication_enabled": false,
+    "is_hidden": false,
+    "is_live": true,
+    "is_on_marketplace": true,
+    "is_pending": false,
+    "is_purchase_protected": false,
+    "is_seller_business_onboarded": false,
+    "is_shipping_offered": false,
+    "is_sold": false,
+    "is_viewer_seller": false,
+    "legal_disclosure_impressum_url": null,
+    "legal_reporting_cta_type": null,
+    "legal_reporting_uri": null,
+    "listed_by": null,
+    "listing_address": null,
+    "listing_inventory_type": "SINGLE_QUANTITY",
+    "listing_is_rejected": false,
+    "listing_photos": [
+      {
+        "__typename": "Photo",
+        "accessibility_caption": "May be an image of car and text",
+        "id": "1999216860575380",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t39.30808-6/473331325_1999216907242042_1239308557726259454_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=104&ccb=1-7&_nc_sid=454cf4&_nc_ohc=obD1AQk1CtcQ7kNvgF6ykjM&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AH4EVbD9RGZnyRMi3Rr1S51&oh=00_AYAuw5Dne1uaxeq9iGNoKCpv8CNcII8UZUl2ebST_zNq_Q&oe=678CABD3",
+          "width": 720
+        }
+      },
+      {
+        "__typename": "Photo",
+        "accessibility_caption": "No photo description available.",
+        "id": "1999211003909299",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t39.30808-6/473540448_1999211060575960_3128065407536461500_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=104&ccb=1-7&_nc_sid=946e27&_nc_ohc=oD5xX6quFNIQ7kNvgFUaZnk&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AH4EVbD9RGZnyRMi3Rr1S51&oh=00_AYBGW9pqVsejEaUeZXimp5mwabBfIfu4Iipg7UWWijR9Bg&oe=678C9789",
+          "width": 720
+        }
+      },
+      {
+        "__typename": "Photo",
+        "accessibility_caption": "May be an image of car and text",
+        "id": "1999211023909297",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t39.30808-6/473554594_1999211077242625_7669109615097536694_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=100&ccb=1-7&_nc_sid=946e27&_nc_ohc=apCiH8vkhxkQ7kNvgFEw1MN&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AH4EVbD9RGZnyRMi3Rr1S51&oh=00_AYDKX9uXs69jxGIZmEN9TBxVsWEkz5TaqJb216jmjjXHlQ&oe=678C95E2",
+          "width": 720
+        }
+      },
+      {
+        "__typename": "Photo",
+        "accessibility_caption": "May be an image of car and text",
+        "id": "1999210970575969",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t39.30808-6/473578701_1999211037242629_8359912501905658475_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=100&ccb=1-7&_nc_sid=946e27&_nc_ohc=QTbWzEkRzBYQ7kNvgE73jzW&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AH4EVbD9RGZnyRMi3Rr1S51&oh=00_AYCW2LbY7BgseIxIQpDhFIA5HWpSh_r1AzBJ57icEF63-g&oe=678CA513",
+          "width": 720
+        }
+      },
+      {
+        "__typename": "Photo",
+        "accessibility_caption": "May be an image of car",
+        "id": "1999210990575967",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t39.30808-6/473612314_1999211050575961_1585644268464457552_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=105&ccb=1-7&_nc_sid=946e27&_nc_ohc=Zc9kYpT7MDAQ7kNvgEj9Uo9&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AH4EVbD9RGZnyRMi3Rr1S51&oh=00_AYD4UBEpb-TofooVQhl-9zeCwuAoUf0OkiAgK9n72lX40w&oe=678C8933",
+          "width": 720
+        }
+      },
+      {
+        "__typename": "Photo",
+        "accessibility_caption": "May be an image of car and leather",
+        "id": "1999210930575973",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t39.30808-6/473566088_1999210987242634_6724165884314287728_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=100&ccb=1-7&_nc_sid=946e27&_nc_ohc=P_MxFk_L83oQ7kNvgEFvpSO&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AH4EVbD9RGZnyRMi3Rr1S51&oh=00_AYCv3vpSHTyRPCY9eEYPEjW7E0OL-NYycTwUOBaih0d-KA&oe=678C96AC",
+          "width": 720
+        }
+      },
+      {
+        "__typename": "Photo",
+        "accessibility_caption": "May be an image of car",
+        "id": "1999210997242633",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t39.30808-6/473763946_1999211063909293_8270166630531579540_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=109&ccb=1-7&_nc_sid=946e27&_nc_ohc=MTby9LixlosQ7kNvgEHoJ24&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AH4EVbD9RGZnyRMi3Rr1S51&oh=00_AYC3xo2DNa9aq-iVZ0JX8UyljDkFhDLoW4treWc6JC3SNQ&oe=678CAEDE",
+          "width": 720
+        }
+      },
+      {
+        "__typename": "Photo",
+        "accessibility_caption": "May be an image of speaker",
+        "id": "1999211030575963",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t39.30808-6/473756224_1999211080575958_880643985233705926_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=111&ccb=1-7&_nc_sid=946e27&_nc_ohc=1PMSAQBC6gQQ7kNvgG0UNkM&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AH4EVbD9RGZnyRMi3Rr1S51&oh=00_AYAYnnjXo-HQvfoGFx8w9He3h3GzWe1kWYLSeGxExaonFA&oe=678CAA14",
+          "width": 720
+        }
+      },
+      {
+        "__typename": "Photo",
+        "accessibility_caption": "May be an image of leather",
+        "id": "1999210963909303",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t39.30808-6/473636472_1999211033909296_6494937096587771071_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=109&ccb=1-7&_nc_sid=946e27&_nc_ohc=DeuM4kqHLC8Q7kNvgGRYFiC&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AH4EVbD9RGZnyRMi3Rr1S51&oh=00_AYDNtk1Ksd8qyltlbM1q-ZWCDfzvsnYdzYiGRYX8m73OHg&oe=678C8A37",
+          "width": 720
+        }
+      },
+      {
+        "__typename": "Photo",
+        "accessibility_caption": "May be an image of car and text",
+        "id": "1999210980575968",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t39.30808-6/473719291_1999211047242628_7169364498850261933_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=105&ccb=1-7&_nc_sid=946e27&_nc_ohc=-Qk5foIwIMgQ7kNvgGwBR6p&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AH4EVbD9RGZnyRMi3Rr1S51&oh=00_AYBAmq6CId27saazJu1YQkGLTxKxad2i3OLCvmOcVzIVjg&oe=678C9460",
+          "width": 720
+        }
+      },
+      {
+        "__typename": "Photo",
+        "accessibility_caption": "May be an image of car and text",
+        "id": "1999211057242627",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t39.30808-6/473430439_1999211090575957_3100492798432565539_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=111&ccb=1-7&_nc_sid=946e27&_nc_ohc=PMvQwgNss9EQ7kNvgHpYCnO&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AH4EVbD9RGZnyRMi3Rr1S51&oh=00_AYDavfSXXNadIkId1oexEU20l38FOUmO0t7dHCp4VUqniA&oe=678CAE00",
+          "width": 720
+        }
+      },
+      {
+        "__typename": "Photo",
+        "accessibility_caption": "May be an image of car and text",
+        "id": "1999211043909295",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t39.30808-6/473367593_1999211083909291_5057184628747270568_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=102&ccb=1-7&_nc_sid=946e27&_nc_ohc=uBRtk7eqo84Q7kNvgEwbT05&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AH4EVbD9RGZnyRMi3Rr1S51&oh=00_AYBVrpPlcvZFyd33wL0JdpMdgqV7iSmqD3bL97NCOAJtdw&oe=678C9DC9",
+          "width": 720
+        }
+      },
+      {
+        "__typename": "Photo",
+        "accessibility_caption": "May be an image of car and text",
+        "id": "1999211070575959",
+        "image": {
+          "height": 960,
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t39.30808-6/473577370_1999211093909290_3667858986181362371_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=109&ccb=1-7&_nc_sid=946e27&_nc_ohc=5XqmiQr3xZQQ7kNvgHrKqCM&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AH4EVbD9RGZnyRMi3Rr1S51&oh=00_AYCwQSId163jU9GUPMbaX6Ju0M0PHVPpLaytZcDv8g_yCw&oe=678CB0F0",
+          "width": 720
+        }
+      }
+    ],
+    "listing_price": {
+      "amount": "94950.00",
+      "amount_with_offset": "9495000",
+      "currency": "CAD"
+    },
+    "listing_seller_notices": [],
+    "location": {
+      "latitude": 48.457946777344,
+      "longitude": -123.35998535156,
+      "reverse_geocode_detailed": {
+        "country_alpha_two": "CA",
+        "postal_code_trimmed": "V8X 1H4"
+      }
+    },
+    "location_text": {
+      "text": "Saanich, BC"
+    },
+    "location_vanity_or_id": "victoria",
+    "logging_id": "9192582224132895",
+    "marketplace_bump_info": null,
+    "marketplace_lead_gen_form": null,
+    "marketplace_listing_category_id": "807311116002614",
+    "marketplace_listing_seller": null,
+    "marketplace_listing_title": "2023 Audi RS 5",
+    "messagingEnabled": true,
+    "messaging_enabled": true,
+    "most_recent_active_order_as_buyer": null,
+    "order_summaries": [],
+    "origin_group": null,
+    "origin_target": {
+      "__typename": "Marketplace",
+      "id": "1759579680997030"
+    },
+    "payment_time_period": null,
+    "pre_recorded_videos": [
+      {
+        "height": 1280,
+        "id": "988055189803770",
+        "image": {
+          "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t15.5256-10/473599140_2162455517489960_3341523388254989968_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=106&ccb=1-7&_nc_sid=282d23&_nc_ohc=8mfnGWREe4sQ7kNvgHhDIls&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AH4EVbD9RGZnyRMi3Rr1S51&oh=00_AYAWstuzXSOPZNtPPjaMDzKehFr8kibXrm_Y4hMTUF4oHw&oe=678CA13B"
+        },
+        "playable_url": "https://video.fyvr1-1.fna.fbcdn.net/o1/v/t2/f2/m69/AQN9oliXteG7ZJEW6phE6N8eDnAWxbkntQ3xIjgy0WDlusK7GasyckqKY_G7aROlm5Pz9vc3enBCYVHRG_NWbP8l.mp4?strext=1&_nc_cat=104&_nc_sid=8bf8fe&_nc_ht=video.fyvr1-1.fna.fbcdn.net&_nc_ohc=0W3Q1XwXrOQQ7kNvgFe206R&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuMzYwLnN2ZV9zZCIsInhwdl9hc3NldF9pZCI6NTYzMjAxNDk5ODc0NDYzLCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=9-4&_nc_zt=28&oh=00_AYB4dPTW44ZdyqDT8SRGXy9uqST3363b_sMsyThrPlrU0Q&oe=678CA3AF",
+        "playable_url_hd": "https://video.fyvr1-1.fna.fbcdn.net/o1/v/t2/f2/m69/AQOPDZxQgp_qzDPQZFwG4LXSEaDf-LtHknBILM1vSEUvfkaga1PuP2U736Dt1JF_K4tkWEm9JNMOKqoIzHtBp8O3.mp4?efg=eyJ4cHZfYXNzZXRfaWQiOjU2MzIwMTQ5OTg3NDQ2MywidmVuY29kZV90YWciOiJ4cHZfcHJvZ3Jlc3NpdmUuRkFDRUJPT0suLkMzLjcyMC5kYXNoX2gyNjQtYmFzaWMtZ2VuMl83MjBwIn0&_nc_ht=video.fyvr1-1.fna.fbcdn.net&_nc_cat=102&strext=1&vs=e0682f63d542bb8a&_nc_vs=HBksFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HUHRuT3h3LXlrNGJKLWdmQUJWX1pvdmM5ZG9pYm1kakFBQUYVAALIAQAVAhg6cGFzc3Rocm91Z2hfZXZlcnN0b3JlL0dBZjNOaHgyenVieWNqOERBS1F4QVVqWDlJd3JickZxQUFBRhUCAsgBACgAGAAbAogHdXNlX29pbAExEnByb2dyZXNzaXZlX3JlY2lwZQExFQAAJr6SspXSjoACFQIoAkMzLBdAETMzMzMzMxgZZGFzaF9oMjY0LWJhc2ljLWdlbjJfNzIwcBEAdQIA&ccb=9-4&oh=00_AYCZgq1HfzrZBxgI2ur6tHpkzzljy21F_F_201mTz1OsDg&oe=67889201&_nc_sid=1d576d",
+        "width": 720
+      }
+    ],
+    "primary_listing_photo": {
+      "__typename": "Photo",
+      "id": "1999216860575380",
+      "listing_image": {
+        "uri": "https://scontent.fyvr1-1.fna.fbcdn.net/v/t39.30808-6/473331325_1999216907242042_1239308557726259454_n.jpg?stp=c0.169.1537.1537a_dst-jpg_s133x133_tt6&_nc_cat=104&ccb=1-7&_nc_sid=454cf4&_nc_ohc=obD1AQk1CtcQ7kNvgF6ykjM&_nc_zt=23&_nc_ht=scontent.fyvr1-1.fna&_nc_gid=AH4EVbD9RGZnyRMi3Rr1S51&oh=00_AYC_DiOWK4Qe_ZgcI4mSXI4ZtNurKsxkIRuj_lVV4o9eHQ&oe=678CABD3"
+      }
+    },
+    "primary_mp_ent": {
+      "__typename": "GroupCommerceProductItem",
+      "id": "3157482384404603"
+    },
+    "product_item": {
+      "boosted_marketplace_listing": null,
+      "id": "9192582224132895",
+      "promoted_listing": null,
+      "viewer_purchase_limit": -1
+    },
+    "real_estate_listing_agent": null,
+    "rebuy_order_receipt": null,
+    "redacted_description": {
+      "text": "\nIntroducing our 2023 Audi RS5 Coupe. Honestly this car speaks for it self if you know you know. In gorgeous condition and we put brand new breaks and tires on so its ready to hit the road.\n\nFor more detailed information message me here or call [hidden information] and ask for Josiah.\n\nTrades welcome\nCar-fax provided \nFinance options available\n\nLoaded with tons of features\nMassage seats front seats \nLane keep assist\nIts an RS5\n\nStock number 341750\nDealer number 31246\n\nNote the sales price is subject to the documentation fee and taxes\n\n- Available for viewing and test drives at Audi Victoria "
+    },
+    "reportable_ent_id": "9192582224132895",
+    "seller": null,
+    "seller_cms": null,
+    "seller_message_thread": null,
+    "seller_phone_number": null,
+    "shipping_offered": false,
+    "shipping_profile": null,
+    "should_hide_pdp_shipping_content": true,
+    "should_show_txn_survey_on_mas": false,
+    "story": null,
+    "sweepstake_content": null,
+    "sweepstake_enabled": false,
+    "sweepstake_status": "INVALID",
+    "vacation_mode": null,
+    "vehicle_carfax_report": null,
+    "vehicle_condition": null,
+    "vehicle_exterior_color": "grey",
+    "vehicle_features": [],
+    "vehicle_fuel_type": null,
+    "vehicle_identification_number": null,
+    "vehicle_interior_color": "black",
+    "vehicle_is_paid_off": null,
+    "vehicle_make_display_name": "Audi",
+    "vehicle_model_display_name": "RS 5",
+    "vehicle_number_of_owners": null,
+    "vehicle_odometer_data": {
+      "unit": "KILOMETERS",
+      "value": 5500
+    },
+    "vehicle_registration_plate_information": null,
+    "vehicle_seller_type": "PRIVATE_SELLER",
+    "vehicle_specifications": {
+      "co2_emissions": null,
+      "engine_size": null,
+      "gas_mileage_city": null,
+      "gas_mileage_combined": null,
+      "gas_mileage_highway": null,
+      "horse_power": null,
+      "safety_rating_front": null,
+      "safety_rating_overall": null,
+      "safety_rating_rollover": null,
+      "safety_rating_side": null,
+      "safety_rating_side_barrier": null
+    },
+    "vehicle_title_status": null,
+    "vehicle_transmission_type": "AUTOMATIC",
+    "vehicle_trim_display_name": null,
+    "vehicle_website_link": null
+  },
+  "viewer": {
+    "__typename": "Viewer",
+    "marketplace_actor_with_integrity_status": {
+      "marketplace_user_in_dma": false
+    },
+    "marketplace_settings": {
+      "loan_payment_options": null
+    }
+  }
+}
