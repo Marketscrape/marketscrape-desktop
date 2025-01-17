@@ -30,7 +30,6 @@ import {
   toTitleCase,
   useListingUtils,
 } from "@/lib/utils";
-import { formatDistanceToNow } from "date-fns";
 import ImageGallery from "./ImageGallery.vue";
 import { main } from "./../../wailsjs/go/models";
 
@@ -47,21 +46,16 @@ const getColourStyle = (color: string) => {
 };
 
 const props = defineProps<{
-  listing: any;
+  listing: main.Root;
 }>();
 
 const vehicleData = computed(() => props.listing.target.vehicle_data);
 
 const formattedOdometer = computed(() => {
-  const odometerData = vehicleData.value.vehicle_odometer_data;
+  const odometerData = vehicleData.value?.vehicle_odometer_data;
   return odometerData
     ? `${odometerData.value.toLocaleString()} ${odometerData.unit}`
     : "N/A";
-});
-
-const hasSpecifications = computed(() => {
-  const specs = vehicleData.value.vehicle_specifications;
-  return specs && Object.values(specs).some((value) => value !== null);
 });
 
 const { creationTime, filteredCategories, formatPrice } =
