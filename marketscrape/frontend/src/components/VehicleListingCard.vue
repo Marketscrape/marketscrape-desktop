@@ -31,7 +31,6 @@ import {
   useListingUtils,
 } from "@/lib/utils";
 import ImageGallery from "./ImageGallery.vue";
-import { main } from "./../../wailsjs/go/models";
 
 const getColourStyle = (color: string) => {
   return {
@@ -46,7 +45,7 @@ const getColourStyle = (color: string) => {
 };
 
 const props = defineProps<{
-  listing: main.Root;
+  listing: any;
 }>();
 
 const vehicleData = computed(() => props.listing.target.vehicle_data);
