@@ -17,18 +17,21 @@ import {
   Clock,
   Image as ImageIcon,
   MapPin,
-  Tag,
+  Users,
+  User,
   Car,
   Fuel,
   Gauge,
   Palette,
   Cog,
+  Zap,
 } from "lucide-vue-next";
 
 import {
-  capitalizeFirstLetter,
   toTitleCase,
   useListingUtils,
+  textToNumber,
+  capitalizeFirstLetter,
 } from "@/lib/utils";
 import ImageGallery from "./ImageGallery.vue";
 
@@ -50,13 +53,11 @@ const props = defineProps<{
 
 const vehicleData = computed(() => props.listing.target.vehicle_data);
 
-const formattedOdometer = computed(() => {
-  const odometerData = vehicleData.value?.vehicle_odometer_data;
-  return odometerData
-    ? `${odometerData.value.toLocaleString()} ${odometerData.unit}`
-    : "N/A";
+const numberOfOwners = computed(() => {
+  const ownersText = vehicleData.value?.vehicle_number_of_owners;
+  if (!ownersText) return null;
+  return textToNumber(ownersText);
 });
-
 const { creationTime, filteredCategories, formatPrice } =
   useListingUtils(props);
 </script>
@@ -92,32 +93,38 @@ const { creationTime, filteredCategories, formatPrice } =
 
       <Separator />
 
-      <div class="grid grid-cols-2 gap-4 text-sm">
-        <div class="space-y-2">
-          <div class="flex items-center space-x-2">
-            <Car class="h-4 w-4 text-muted-foreground" />
-            <span>
-              {{ vehicleData.vehicle_make_display_name }}
-              {{ vehicleData.vehicle_model_display_name }}
-              {{ vehicleData.vehicle_trim_display_name }}
-            </span>
-          </div>
-          <div class="flex items-center space-x-2">
-            <Gauge class="h-4 w-4 text-muted-foreground" />
-            <span>{{ formattedOdometer }}</span>
-          </div>
-          <div class="flex items-center space-x-2">
-            <Fuel class="h-4 w-4 text-muted-foreground" />
-            <span>{{ vehicleData.vehicle_fuel_type || "N/A" }}</span>
-          </div>
-          <div class="flex items-center space-x-2">
-            <Cog class="h-4 w-4 text-muted-foreground" />
-            <span>{{ vehicleData.vehicle_transmission_type || "N/A" }}</span>
-          </div>
+      <div class="grid grid-cols-2 gap-y-1 text-sm">
+        <div class="flex items-center">
+          <Car class="h-4 w-4 text-muted-foreground mr-2" />
+          <span>
+            {{ vehicleData.vehicle_make_display_name }}
+            {{ vehicleData.vehicle_model_display_name }}
+            {{ vehicleData.vehicle_trim_display_name }}
+          </span>
         </div>
-        <div class="space-y-2">
+        <div class="flex items-center">
+          <Gauge class="h-4 w-4 text-muted-foreground mr-2" />
+          <span>
+            {{
+              vehicleData.vehicle_odometer_data.value.toLocaleString("en-US")
+            }}
+            {{ vehicleData.vehicle_odometer_data.unit.toLowerCase() }}
+          </span>
+        </div>
+        <div v-if="vehicleData.vehicle_fuel_type" class="flex items-center">
+          <Fuel class="h-4 w-4 text-muted-foreground mr-2" />
+          <span>{{ toTitleCase(vehicleData.vehicle_fuel_type) }}</span>
+        </div>
+        <div
+          v-if="vehicleData.vehicle_transmission_type"
+          class="flex items-center"
+        >
+          <Cog class="h-4 w-4 text-muted-foreground mr-2" />
+          <span>{{ toTitleCase(vehicleData.vehicle_transmission_type) }}</span>
+        </div>
+        <div class="flex items-center">
+          <Palette class="h-4 w-4 text-muted-foreground mr-2" />
           <div class="flex items-center space-x-2">
-            <Palette class="h-4 w-4 text-muted-foreground" />
             <span class="flex items-center">
               Exterior:
               <span
@@ -126,9 +133,9 @@ const { creationTime, filteredCategories, formatPrice } =
               >
               </span>
             </span>
-          </div>
-          <div class="flex items-center space-x-2">
-            <Palette class="h-4 w-4 text-muted-foreground" />
+
+            <Separator orientation="vertical" class="h-4" />
+
             <span class="flex items-center">
               Interior:
               <span
@@ -138,49 +145,47 @@ const { creationTime, filteredCategories, formatPrice } =
               </span>
             </span>
           </div>
-          <div
-            class="flex items-center space-x-2"
-            v-if="vehicleData.vehicle_identification_number"
-          >
-            <Tag class="h-4 w-4 text-muted-foreground" />
-            <span>VIN: {{ vehicleData.vehicle_identification_number }}</span>
-          </div>
-          <div class="flex items-center space-x-2">
-            <Clock class="h-4 w-4 text-muted-foreground" />
-            <span>{{ capitalizeFirstLetter(creationTime) }}</span>
-          </div>
+        </div>
+        <div
+          v-if="vehicleData.vehicle_specifications.horse_power"
+          class="flex items-center"
+        >
+          <Zap class="h-4 w-4 text-muted-foreground mr-2" />
+          <span>
+            {{ vehicleData.vehicle_specifications.horse_power.value }}
+            {{
+              vehicleData.vehicle_specifications.horse_power.units.toUpperCase()
+            }}
+          </span>
+        </div>
+        <div class="flex items-center">
+          <User
+            v-if="numberOfOwners === 1"
+            class="h-4 w-4 text-muted-foreground mr-2"
+          />
+          <Users v-else class="h-4 w-4 text-muted-foreground mr-2" />
+          <span>
+            {{ numberOfOwners === 1 ? "1 owner" : `${numberOfOwners} owners` }}
+          </span>
+        </div>
+
+        <div class="flex items-center">
+          <Clock class="h-4 w-4 text-muted-foreground mr-2" />
+          <span>{{ capitalizeFirstLetter(creationTime) }}</span>
         </div>
       </div>
 
       <Separator />
-
-      <div
-        v-if="
-          vehicleData.vehicle_features && vehicleData.vehicle_features.length
-        "
-        class="space-y-2"
-      >
-        <h4 class="font-semibold">Features</h4>
-        <div class="flex flex-wrap gap-1">
-          <Badge
-            v-for="feature in vehicleData.vehicle_features"
-            :key="feature"
-            variant="secondary"
-          >
-            {{ feature }}
-          </Badge>
-        </div>
-      </div>
     </CardContent>
     <CardFooter class="flex justify-between">
-      <div class="flex items-center space-x-2 text-sm text-muted-foreground">
-        <MapPin class="h-4 w-4" />
+      <div class="flex items-center text-sm text-muted-foreground">
+        <MapPin class="h-4 w-4 mr-2" />
         <span>{{ listing.target.location_text.text }}</span>
       </div>
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline" size="sm">
-            <ImageIcon class="h-4 w-4 mr-2" />
+            <ImageIcon class="h-4 w-4" />
             Image Gallery
           </Button>
         </DialogTrigger>

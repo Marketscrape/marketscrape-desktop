@@ -42,7 +42,7 @@ const { creationTime, filteredCategories, formatPrice } =
       </CardTitle>
       <CardDescription
         v-if="filteredCategories?.length"
-        class="space-y-2 space-x-1"
+        class="space-y-2 space-x-2"
       >
         <Badge
           v-for="category in filteredCategories"
@@ -61,12 +61,12 @@ const { creationTime, filteredCategories, formatPrice } =
       <Separator />
 
       <div class="grid grid-flow-row text-sm gap-1">
-        <div class="flex items-center space-x-1">
-          <Tag class="h-4 w-4 text-muted-foreground" />
+        <div class="flex items-center">
+          <Tag class="h-4 w-4 text-muted-foreground mr-2" />
           <span>{{ listing.target.attribute_data[0].label }}</span>
         </div>
-        <div class="flex items-center space-x-1">
-          <Clock class="h-4 w-4 text-muted-foreground" />
+        <div class="flex items-center">
+          <Clock class="h-4 w-4 text-muted-foreground mr-2" />
           <span>{{ capitalizeFirstLetter(creationTime) }}</span>
         </div>
       </div>
@@ -74,14 +74,14 @@ const { creationTime, filteredCategories, formatPrice } =
       <Separator />
     </CardContent>
     <CardFooter class="flex justify-between">
-      <div class="flex items-center space-x-2 text-sm text-muted-foreground">
-        <MapPin class="h-4 w-4" />
+      <div class="flex items-center text-sm text-muted-foreground">
+        <MapPin class="h-4 w-4 mr-2" />
         <span>{{ listing.target.location_text.text }}</span>
       </div>
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline" size="sm">
-            <ImageIcon class="h-4 w-4 mr-2" />
+            <ImageIcon class="h-4 w-4" />
             Image Gallery
           </Button>
         </DialogTrigger>
