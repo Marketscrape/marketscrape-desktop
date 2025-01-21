@@ -3,3 +3,5 @@
 import {main} from '../models';
 
 export function GetMarketplaceListing(arg1:string):Promise<main.Root>;
+
+export function GetOllamaModels():Promise<Array<main.Model>>;

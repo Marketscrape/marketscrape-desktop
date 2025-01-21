@@ -5,3 +5,7 @@
 export function GetMarketplaceListing(arg1) {
   return window['go']['main']['App']['GetMarketplaceListing'](arg1);
 }
+
+export function GetOllamaModels() {
+  return window['go']['main']['App']['GetOllamaModels']();
+}
