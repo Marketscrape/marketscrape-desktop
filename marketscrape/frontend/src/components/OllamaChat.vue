@@ -113,17 +113,9 @@ const sendMessage = async () => {
                 <div
                   :class="[
                     'max-w-[80%] rounded-md p-3 text-sm break-words',
-                    msg.role === 'user'
-                      ? 'bg-accent ml-auto'
-                      : 'flex items-start space-x-2',
+                    msg.role === 'user' ? 'bg-accent ml-auto' : '',
                   ]"
                 >
-                  <div
-                    v-if="msg.role === 'assistant'"
-                    class="flex-shrink-0 bg-accent h-9 w-9 rounded-full flex items-center justify-center p-1"
-                  >
-                    <OllamaIcon class="h-4 w-4 fill-foreground" />
-                  </div>
                   <div class="leading-relaxed">
                     <span
                       v-if="
