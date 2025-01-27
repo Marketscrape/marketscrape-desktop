@@ -34,6 +34,7 @@ import {
   capitalizeFirstLetter,
 } from "@/lib/utils";
 import ImageGallery from "./ImageGallery.vue";
+import { main } from "./../../wailsjs/go/models";
 
 const getColourStyle = (color: string) => {
   return {
@@ -48,10 +49,10 @@ const getColourStyle = (color: string) => {
 };
 
 const props = defineProps<{
-  listing: any;
+  listing: main.Root;
 }>();
 
-const vehicleData = computed(() => props.listing.target.vehicle_data);
+const vehicleData = computed(() => props.listing.target.vehicle_data!);
 
 const numberOfOwners = computed(() => {
   const ownersText = vehicleData.value?.vehicle_number_of_owners;
