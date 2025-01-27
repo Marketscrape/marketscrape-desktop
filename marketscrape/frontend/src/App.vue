@@ -62,8 +62,8 @@ const resetListing = () => {
       </div>
     </div>
 
-    <div class="absolute bottom-0 right-0">
-      <OllamaChat />
+    <div class="absolute bottom-0 right-0" v-if="listing">
+      <OllamaChat :listing="listing" />
     </div>
   </div>
 </template>
