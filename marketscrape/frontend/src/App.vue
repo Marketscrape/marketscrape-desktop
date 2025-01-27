@@ -10,11 +10,7 @@ import ProductListingCard from "./components/ProductListingCard.vue";
 import VehicleListingCard from "./components/VehicleListingCard.vue";
 import OllamaChat from "./components/OllamaChat.vue";
 import { main } from "./../wailsjs/go/models";
-
-enum Categories {
-  Product = "FOR_SALE_ITEM",
-  Vehicle = "AUTOS_VEHICLE",
-}
+import { Categories } from "@/lib/utils";
 
 const listing = ref<main.Root | null>(null);
 const listingType = ref<string | null>(null);

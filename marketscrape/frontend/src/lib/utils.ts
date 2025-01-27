@@ -5,6 +5,11 @@ import { formatDistanceToNow } from "date-fns";
 
 import { main } from "./../../wailsjs/go/models";
 
+export enum Categories {
+  Product = "FOR_SALE_ITEM",
+  Vehicle = "AUTOS_VEHICLE",
+}
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
