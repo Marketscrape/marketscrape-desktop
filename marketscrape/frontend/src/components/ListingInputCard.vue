@@ -71,44 +71,42 @@ const onSubmit = form.handleSubmit(async (values) => {
 </script>
 
 <template>
-  <div class="flex h-[calc(100vh-4rem)] items-center">
-    <form class="mx-auto" @submit="onSubmit">
-      <Card>
-        <CardHeader>
-          <CardTitle>Analyze a Marketplace Listing</CardTitle>
-          <CardDescription>
-            Enter the listing URL or ID to retrieve detailed information and
-            insights about the product.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <FormField v-slot="{ componentField }" name="listingId">
-            <FormItem v-auto-animate>
-              <FormLabel>Listing ID or URL</FormLabel>
-              <FormControl>
-                <Input
-                  type="text"
-                  placeholder="Enter Marketplace Listing URL or ID"
-                  v-bind="componentField"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          </FormField>
-        </CardContent>
-        <CardFooter class="flex justify-end">
-          <Button type="submit" :disabled="isLoading">
-            <template v-if="!isLoading">
-              <Send />
-              Submit
-            </template>
-            <template v-else>
-              <Loader2 class="animate-spin" />
-              Loading...
-            </template>
-          </Button>
-        </CardFooter>
-      </Card>
-    </form>
-  </div>
+  <form class="mx-auto" @submit="onSubmit">
+    <Card>
+      <CardHeader>
+        <CardTitle>Analyze a Marketplace Listing</CardTitle>
+        <CardDescription>
+          Enter the listing URL or ID to retrieve detailed information and
+          insights about the product.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <FormField v-slot="{ componentField }" name="listingId">
+          <FormItem v-auto-animate>
+            <FormLabel>Listing ID or URL</FormLabel>
+            <FormControl>
+              <Input
+                type="text"
+                placeholder="Enter Marketplace Listing URL or ID"
+                v-bind="componentField"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        </FormField>
+      </CardContent>
+      <CardFooter class="flex justify-end">
+        <Button type="submit" :disabled="isLoading">
+          <template v-if="!isLoading">
+            <Send />
+            Submit
+          </template>
+          <template v-else>
+            <Loader2 class="animate-spin" />
+            Loading...
+          </template>
+        </Button>
+      </CardFooter>
+    </Card>
+  </form>
 </template>

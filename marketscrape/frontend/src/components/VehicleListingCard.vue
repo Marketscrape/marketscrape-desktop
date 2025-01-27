@@ -11,29 +11,34 @@ import {
 } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { computed } from "vue";
 
 import {
-  Clock,
-  Image as ImageIcon,
-  MapPin,
-  Users,
-  User,
   Car,
+  Cog,
   Fuel,
   Gauge,
+  Image as ImageIcon,
   Palette,
-  Cog,
+  User,
+  Users,
   Zap,
 } from "lucide-vue-next";
 
+import ImageGallery from "@/components/ImageGallery.vue";
 import {
+  capitalizeFirstLetter,
+  textToNumber,
   toTitleCase,
   useListingUtils,
-  textToNumber,
-  capitalizeFirstLetter,
 } from "@/lib/utils";
-import ImageGallery from "./ImageGallery.vue";
+import { main } from "./../../wailsjs/go/models";
 
 const getColourStyle = (color: string) => {
   return {
@@ -48,10 +53,10 @@ const getColourStyle = (color: string) => {
 };
 
 const props = defineProps<{
-  listing: any;
+  listing: main.Root;
 }>();
 
-const vehicleData = computed(() => props.listing.target.vehicle_data);
+const vehicleData = computed(() => props.listing.target.vehicle_data!);
 
 const numberOfOwners = computed(() => {
   const ownersText = vehicleData.value?.vehicle_number_of_owners;
@@ -65,12 +70,15 @@ const { creationTime, filteredCategories, formatPrice } =
 <template>
   <Card>
     <CardHeader>
-      <CardTitle class="space-y-1">
-        <div class="text-xl font-semibold leading-none tracking-tight">
-          {{ listing.target.marketplace_listing_title }}
-        </div>
-        <div>
-          {{ formatPrice }}
+      <CardTitle>
+        <div class="space-y-1">
+          <h1 class="text-xl font-semibold leading-none tracking-tight">
+            {{ listing.target.marketplace_listing_title }}
+          </h1>
+          <p class="text-sm font-normal text-muted-foreground">
+            Listed {{ capitalizeFirstLetter(creationTime) }} in
+            {{ listing.target.location_text.text }}, for {{ formatPrice }}
+          </p>
         </div>
       </CardTitle>
       <CardDescription
@@ -87,9 +95,9 @@ const { creationTime, filteredCategories, formatPrice } =
       </CardDescription>
     </CardHeader>
     <CardContent class="space-y-4">
-      <p class="whitespace-pre-wrap">
-        {{ listing.target.redacted_description.text }}
-      </p>
+      <blockquote className="border-l-2 pl-6 italic whitespace-pre-wrap">
+        "{{ listing.target.redacted_description.text }}"
+      </blockquote>
 
       <Separator />
 
@@ -122,27 +130,67 @@ const { creationTime, filteredCategories, formatPrice } =
           <Cog class="h-4 w-4 text-muted-foreground mr-2" />
           <span>{{ toTitleCase(vehicleData.vehicle_transmission_type) }}</span>
         </div>
-        <div class="flex items-center">
+        <div
+          class="flex items-center"
+          v-if="
+            vehicleData.vehicle_exterior_color ||
+            vehicleData.vehicle_interior_color
+          "
+        >
           <Palette class="h-4 w-4 text-muted-foreground mr-2" />
           <div class="flex items-center space-x-2">
-            <span class="flex items-center">
+            <span
+              class="flex items-center"
+              v-if="vehicleData.vehicle_exterior_color"
+            >
               Exterior:
-              <span
-                v-if="vehicleData.vehicle_exterior_color"
-                :style="getColourStyle(vehicleData.vehicle_exterior_color)"
-              >
-              </span>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger as-child>
+                    <span
+                      v-if="vehicleData.vehicle_exterior_color"
+                      :style="
+                        getColourStyle(vehicleData.vehicle_exterior_color)
+                      "
+                      class="cursor-help"
+                    >
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {{ toTitleCase(vehicleData.vehicle_exterior_color) }}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </span>
 
-            <Separator orientation="vertical" class="h-4" />
+            <Separator
+              orientation="vertical"
+              class="h-4"
+              v-if="vehicleData.vehicle_interior_color"
+            />
 
-            <span class="flex items-center">
+            <span
+              class="flex items-center"
+              v-if="vehicleData.vehicle_interior_color"
+            >
               Interior:
-              <span
-                v-if="vehicleData.vehicle_interior_color"
-                :style="getColourStyle(vehicleData.vehicle_interior_color)"
-              >
-              </span>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger as-child>
+                    <span
+                      v-if="vehicleData.vehicle_interior_color"
+                      :style="
+                        getColourStyle(vehicleData.vehicle_interior_color)
+                      "
+                      class="cursor-help"
+                    >
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {{ toTitleCase(vehicleData.vehicle_interior_color) }}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </span>
           </div>
         </div>
@@ -158,7 +206,7 @@ const { creationTime, filteredCategories, formatPrice } =
             }}
           </span>
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center" v-if="numberOfOwners">
           <User
             v-if="numberOfOwners === 1"
             class="h-4 w-4 text-muted-foreground mr-2"
@@ -168,20 +216,9 @@ const { creationTime, filteredCategories, formatPrice } =
             {{ numberOfOwners === 1 ? "1 owner" : `${numberOfOwners} owners` }}
           </span>
         </div>
-
-        <div class="flex items-center">
-          <Clock class="h-4 w-4 text-muted-foreground mr-2" />
-          <span>{{ capitalizeFirstLetter(creationTime) }}</span>
-        </div>
       </div>
-
-      <Separator />
     </CardContent>
-    <CardFooter class="flex justify-between">
-      <div class="flex items-center text-sm text-muted-foreground">
-        <MapPin class="h-4 w-4 mr-2" />
-        <span>{{ listing.target.location_text.text }}</span>
-      </div>
+    <CardFooter class="flex justify-end">
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline" size="sm">

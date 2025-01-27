@@ -40,6 +40,26 @@ export namespace main {
 	        this.text = source["text"];
 	    }
 	}
+	export class Details {
+	    format: string;
+	    family: string;
+	    families: any;
+	    parameter_size: string;
+	    quantization_level: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new Details(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.format = source["format"];
+	        this.family = source["family"];
+	        this.families = source["families"];
+	        this.parameter_size = source["parameter_size"];
+	        this.quantization_level = source["quantization_level"];
+	    }
+	}
 	export class ImageDetails {
 	    uri: string;
 	    height: number;
@@ -204,6 +224,106 @@ export namespace main {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.seo_virtual_category = this.convertValues(source["seo_virtual_category"], SEOVirtualCategory);
+	    }
+	
+		convertValues(a: any, classs: any, asMap: boolean = false): any {
+		    if (!a) {
+		        return a;
+		    }
+		    if (a.slice && a.map) {
+		        return (a as any[]).map(elem => this.convertValues(elem, classs));
+		    } else if ("object" === typeof a) {
+		        if (asMap) {
+		            for (const key of Object.keys(a)) {
+		                a[key] = new classs(a[key]);
+		            }
+		            return a;
+		        }
+		        return new classs(a);
+		    }
+		    return a;
+		}
+	}
+	export class Message {
+	    role: string;
+	    content: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new Message(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.role = source["role"];
+	        this.content = source["content"];
+	    }
+	}
+	export class Model {
+	    name: string;
+	    modified_at: string;
+	    size: number;
+	    digest: string;
+	    details: Details;
+	
+	    static createFrom(source: any = {}) {
+	        return new Model(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.name = source["name"];
+	        this.modified_at = source["modified_at"];
+	        this.size = source["size"];
+	        this.digest = source["digest"];
+	        this.details = this.convertValues(source["details"], Details);
+	    }
+	
+		convertValues(a: any, classs: any, asMap: boolean = false): any {
+		    if (!a) {
+		        return a;
+		    }
+		    if (a.slice && a.map) {
+		        return (a as any[]).map(elem => this.convertValues(elem, classs));
+		    } else if ("object" === typeof a) {
+		        if (asMap) {
+		            for (const key of Object.keys(a)) {
+		                a[key] = new classs(a[key]);
+		            }
+		            return a;
+		        }
+		        return new classs(a);
+		    }
+		    return a;
+		}
+	}
+	export class ModelReponse {
+	    model: string;
+	    created_at: string;
+	    message: Message;
+	    done: boolean;
+	    total_duration: number;
+	    load_duration: number;
+	    prompt_eval_count: number;
+	    prompt_eval_duration: number;
+	    eval_count: number;
+	    eval_duration: number;
+	
+	    static createFrom(source: any = {}) {
+	        return new ModelReponse(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.model = source["model"];
+	        this.created_at = source["created_at"];
+	        this.message = this.convertValues(source["message"], Message);
+	        this.done = source["done"];
+	        this.total_duration = source["total_duration"];
+	        this.load_duration = source["load_duration"];
+	        this.prompt_eval_count = source["prompt_eval_count"];
+	        this.prompt_eval_duration = source["prompt_eval_duration"];
+	        this.eval_count = source["eval_count"];
+	        this.eval_duration = source["eval_duration"];
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {

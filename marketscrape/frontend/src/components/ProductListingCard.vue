@@ -12,17 +12,18 @@ import {
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 
-import { Clock, Image as ImageIcon, MapPin, Tag } from "lucide-vue-next";
+import { Image as ImageIcon, Tag } from "lucide-vue-next";
 
 import {
   capitalizeFirstLetter,
   toTitleCase,
   useListingUtils,
 } from "@/lib/utils";
-import ImageGallery from "./ImageGallery.vue";
+import ImageGallery from "@/components/ImageGallery.vue";
+import { main } from "./../../wailsjs/go/models";
 
 const props = defineProps<{
-  listing: any;
+  listing: main.Root;
 }>();
 
 const { creationTime, filteredCategories, formatPrice } =
@@ -32,12 +33,15 @@ const { creationTime, filteredCategories, formatPrice } =
 <template>
   <Card>
     <CardHeader>
-      <CardTitle class="space-y-1">
-        <div class="text-xl font-semibold leading-none tracking-tight">
-          {{ listing.target.marketplace_listing_title }}
-        </div>
-        <div>
-          {{ formatPrice }}
+      <CardTitle>
+        <div class="space-y-1">
+          <h1 class="text-xl font-semibold leading-none tracking-tight">
+            {{ listing.target.marketplace_listing_title }}
+          </h1>
+          <p class="text-sm font-normal text-muted-foreground">
+            Listed {{ capitalizeFirstLetter(creationTime) }} in
+            {{ listing.target.location_text.text }}, for {{ formatPrice }}
+          </p>
         </div>
       </CardTitle>
       <CardDescription
@@ -54,9 +58,9 @@ const { creationTime, filteredCategories, formatPrice } =
       </CardDescription>
     </CardHeader>
     <CardContent class="space-y-4">
-      <p class="whitespace-pre-wrap">
-        {{ listing.target.redacted_description.text }}
-      </p>
+      <blockquote className="border-l-2 pl-6 italic whitespace-pre-wrap">
+        "{{ listing.target.redacted_description.text }}"
+      </blockquote>
 
       <Separator />
 
@@ -65,19 +69,9 @@ const { creationTime, filteredCategories, formatPrice } =
           <Tag class="h-4 w-4 text-muted-foreground mr-2" />
           <span>{{ listing.target.attribute_data[0].label }}</span>
         </div>
-        <div class="flex items-center">
-          <Clock class="h-4 w-4 text-muted-foreground mr-2" />
-          <span>{{ capitalizeFirstLetter(creationTime) }}</span>
-        </div>
       </div>
-
-      <Separator />
     </CardContent>
-    <CardFooter class="flex justify-between">
-      <div class="flex items-center text-sm text-muted-foreground">
-        <MapPin class="h-4 w-4 mr-2" />
-        <span>{{ listing.target.location_text.text }}</span>
-      </div>
+    <CardFooter class="flex justify-end">
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline" size="sm">

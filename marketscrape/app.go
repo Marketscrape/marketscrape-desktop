@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"crypto/tls"
 	"encoding/json"
@@ -280,4 +281,107 @@ func (a *App) GetMarketplaceListing(id string) (*Root, error) {
 	}
 
 	return root, nil
+}
+
+// ---------------------------------------------------------
+// SECTION: Ollama
+// ---------------------------------------------------------
+type Model struct {
+	Name       string  `json:"name"`
+	ModifiedAt string  `json:"modified_at"`
+	Size       int64   `json:"size"`
+	Digest     string  `json:"digest"`
+	Details    Details `json:"details"`
+}
+
+type Details struct {
+	Format            string `json:"format"`
+	Family            string `json:"family"`
+	Families          any    `json:"families"`
+	ParameterSize     string `json:"parameter_size"`
+	QuantizationLevel string `json:"quantization_level"`
+}
+
+type Models struct {
+	Models []Model `json:"models"`
+}
+
+func (a *App) GetOllamaModels() ([]Model, error) {
+	res, err := http.Get("http://localhost:11434/api/tags")
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	bodyBytes, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %v", err)
+	}
+
+	var response Models
+	err = json.Unmarshal(bodyBytes, &response)
+	if err != nil {
+		return nil, fmt.Errorf("error unmarshalling response: %v", err)
+	}
+
+	return response.Models, nil
+}
+
+type ModelReponse struct {
+	Model              string  `json:"model"`
+	CreatedAt          string  `json:"created_at"`
+	Message            Message `json:"message"`
+	Done               bool    `json:"done"`
+	TotalDuration      int64   `json:"total_duration"`
+	LoadDuration       int64   `json:"load_duration"`
+	PromptEvalCount    int     `json:"prompt_eval_count"`
+	PromptEvalDuration int64   `json:"prompt_eval_duration"`
+	EvalCount          int     `json:"eval_count"`
+	EvalDuration       int64   `json:"eval_duration"`
+}
+
+type Message struct {
+	Role    string `json:"role"`
+	Content string `json:"content"`
+}
+
+func (a *App) PostOllamaModel(model string, message string) (*ModelReponse, error) {
+	if model == "" || message == "" {
+		return nil, fmt.Errorf("missing model or message")
+	}
+
+	payload := map[string]interface{}{
+		"model": model,
+		"messages": []map[string]string{
+			{
+				"role":    "user",
+				"content": message,
+			},
+		},
+		"stream": false,
+	}
+
+	payloadBytes, err := json.Marshal(payload)
+	if err != nil {
+		return nil, fmt.Errorf("error marshalling payload: %v", err)
+	}
+
+	res, err := http.Post("http://localhost:11434/api/chat", "application/json", bytes.NewBuffer(payloadBytes))
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	bodyBytes, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %v", err)
+	}
+
+	var response ModelReponse
+	err = json.Unmarshal(bodyBytes, &response)
+	if err != nil {
+		return nil, fmt.Errorf("error unmarshalling response: %v", err)
+	}
+
+	return &response, nil
 }
