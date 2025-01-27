@@ -129,10 +129,19 @@ const { creationTime, filteredCategories, formatPrice } =
           <Cog class="h-4 w-4 text-muted-foreground mr-2" />
           <span>{{ toTitleCase(vehicleData.vehicle_transmission_type) }}</span>
         </div>
-        <div class="flex items-center">
+        <div
+          class="flex items-center"
+          v-if="
+            vehicleData.vehicle_exterior_color ||
+            vehicleData.vehicle_interior_color
+          "
+        >
           <Palette class="h-4 w-4 text-muted-foreground mr-2" />
           <div class="flex items-center space-x-2">
-            <span class="flex items-center">
+            <span
+              class="flex items-center"
+              v-if="vehicleData.vehicle_exterior_color"
+            >
               Exterior:
               <TooltipProvider>
                 <Tooltip>
@@ -153,9 +162,16 @@ const { creationTime, filteredCategories, formatPrice } =
               </TooltipProvider>
             </span>
 
-            <Separator orientation="vertical" class="h-4" />
+            <Separator
+              orientation="vertical"
+              class="h-4"
+              v-if="vehicleData.vehicle_interior_color"
+            />
 
-            <span class="flex items-center">
+            <span
+              class="flex items-center"
+              v-if="vehicleData.vehicle_interior_color"
+            >
               Interior:
               <TooltipProvider>
                 <Tooltip>
@@ -204,15 +220,14 @@ const { creationTime, filteredCategories, formatPrice } =
           <Clock class="h-4 w-4 text-muted-foreground mr-2" />
           <span>{{ capitalizeFirstLetter(creationTime) }}</span>
         </div>
-      </div>
 
-      <Separator />
+        <div class="flex items-center text-sm">
+          <MapPin class="h-4 w-4 text-muted-foreground mr-2" />
+          <span>{{ listing.target.location_text.text }}</span>
+        </div>
+      </div>
     </CardContent>
     <CardFooter class="flex justify-between">
-      <div class="flex items-center text-sm text-muted-foreground">
-        <MapPin class="h-4 w-4 mr-2" />
-        <span>{{ listing.target.location_text.text }}</span>
-      </div>
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline" size="sm">
