@@ -94,9 +94,9 @@ const { creationTime, filteredCategories, formatPrice } =
       </CardDescription>
     </CardHeader>
     <CardContent class="space-y-4">
-      <p class="whitespace-pre-wrap">
+      <blockquote className="mt-6 border-l-2 pl-6 italic whitespace-pre-wrap">
         {{ listing.target.redacted_description.text }}
-      </p>
+      </blockquote>
 
       <Separator />
 
