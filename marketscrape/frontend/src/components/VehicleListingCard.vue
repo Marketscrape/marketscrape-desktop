@@ -72,13 +72,15 @@ const { creationTime, filteredCategories, formatPrice } =
 <template>
   <Card>
     <CardHeader>
-      <CardTitle class="space-y-1">
-        <div class="text-xl font-semibold leading-none tracking-tight">
-          {{ listing.target.marketplace_listing_title }}
-        </div>
-        <div>
-          {{ capitalizeFirstLetter(creationTime) }}, for {{ formatPrice }} in
-          {{ listing.target.location_text.text }}
+      <CardTitle>
+        <div class="space-y-1">
+          <h1 class="text-xl font-semibold leading-none tracking-tight">
+            {{ listing.target.marketplace_listing_title }}
+          </h1>
+          <p class="text-sm font-normal text-muted-foreground">
+            Listed {{ capitalizeFirstLetter(creationTime) }} in
+            {{ listing.target.location_text.text }}, for {{ formatPrice }}
+          </p>
         </div>
       </CardTitle>
       <CardDescription
