@@ -39,7 +39,7 @@ const resetListing = () => {
 
 <template>
   <div class="h-[calc(100vh-4rem)] relative">
-    <div class="absolute inset-0 grid place-content-center">
+    <div class="absolute inset-0 grid place-content-center grid-cols-1">
       <ListingInputCard v-if="!listing" @listing="handleListing" />
       <div v-else class="space-y-8">
         <div v-if="error">
