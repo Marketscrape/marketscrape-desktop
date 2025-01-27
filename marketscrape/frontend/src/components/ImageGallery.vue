@@ -34,7 +34,7 @@ const setImage = (index: number) => {
     </div>
 
     <ScrollArea class="w-full max-w-lg mt-4 pb-4">
-      <div class="flex w-max space-x-4 overflow-y-hidden">
+      <div class="flex w-max space-x-4 overflow-y-hidden p-4">
         <div v-for="(img, index) in images" :key="index" class="flex-shrink-0">
           <img
             :src="img.image.uri"
