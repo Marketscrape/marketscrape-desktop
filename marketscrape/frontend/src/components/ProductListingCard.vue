@@ -20,9 +20,10 @@ import {
   useListingUtils,
 } from "@/lib/utils";
 import ImageGallery from "./ImageGallery.vue";
+import { main } from "./../../wailsjs/go/models";
 
 const props = defineProps<{
-  listing: any;
+  listing: main.Root;
 }>();
 
 const { creationTime, filteredCategories, formatPrice } =
