@@ -11,30 +11,36 @@ import {
 } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { computed } from "vue";
 
 import {
-  Clock,
-  Image as ImageIcon,
-  MapPin,
-  Users,
-  User,
   Car,
+  Clock,
+  Cog,
   Fuel,
   Gauge,
+  Image as ImageIcon,
+  MapPin,
   Palette,
-  Cog,
+  User,
+  Users,
   Zap,
 } from "lucide-vue-next";
 
 import {
+  capitalizeFirstLetter,
+  textToNumber,
   toTitleCase,
   useListingUtils,
-  textToNumber,
-  capitalizeFirstLetter,
 } from "@/lib/utils";
-import ImageGallery from "./ImageGallery.vue";
 import { main } from "./../../wailsjs/go/models";
+import ImageGallery from "./ImageGallery.vue";
 
 const getColourStyle = (color: string) => {
   return {
@@ -128,22 +134,46 @@ const { creationTime, filteredCategories, formatPrice } =
           <div class="flex items-center space-x-2">
             <span class="flex items-center">
               Exterior:
-              <span
-                v-if="vehicleData.vehicle_exterior_color"
-                :style="getColourStyle(vehicleData.vehicle_exterior_color)"
-              >
-              </span>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger as-child>
+                    <span
+                      v-if="vehicleData.vehicle_exterior_color"
+                      :style="
+                        getColourStyle(vehicleData.vehicle_exterior_color)
+                      "
+                      class="cursor-help"
+                    >
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {{ toTitleCase(vehicleData.vehicle_exterior_color) }}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </span>
 
             <Separator orientation="vertical" class="h-4" />
 
             <span class="flex items-center">
               Interior:
-              <span
-                v-if="vehicleData.vehicle_interior_color"
-                :style="getColourStyle(vehicleData.vehicle_interior_color)"
-              >
-              </span>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger as-child>
+                    <span
+                      v-if="vehicleData.vehicle_interior_color"
+                      :style="
+                        getColourStyle(vehicleData.vehicle_interior_color)
+                      "
+                      class="cursor-help"
+                    >
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {{ toTitleCase(vehicleData.vehicle_interior_color) }}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </span>
           </div>
         </div>
