@@ -12,14 +12,14 @@ import {
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 
-import { Clock, Image as ImageIcon, MapPin, Tag } from "lucide-vue-next";
+import { Image as ImageIcon, Tag } from "lucide-vue-next";
 
 import {
   capitalizeFirstLetter,
   toTitleCase,
   useListingUtils,
 } from "@/lib/utils";
-import ImageGallery from "./ImageGallery.vue";
+import ImageGallery from "@/components/ImageGallery.vue";
 import { main } from "./../../wailsjs/go/models";
 
 const props = defineProps<{

@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Select,
   SelectContent,
@@ -14,15 +16,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Send, Sparkles, CircleAlert } from "lucide-vue-next";
+import { CircleAlert, Send, Sparkles } from "lucide-vue-next";
+import { onMounted, ref } from "vue";
 
-import OllamaIcon from "./OllamaIcon.vue";
 import { GetOllamaModels, PostOllamaModel } from "../../wailsjs/go/main/App.js";
 import { main } from "./../../wailsjs/go/models";
+import OllamaIcon from "@/components/OllamaIcon.vue";
 
 const models = ref<main.Model[] | null>(null);
 const error = ref<string | null>(null);

@@ -21,18 +21,17 @@ import { computed } from "vue";
 
 import {
   Car,
-  Clock,
   Cog,
   Fuel,
   Gauge,
   Image as ImageIcon,
-  MapPin,
   Palette,
   User,
   Users,
   Zap,
 } from "lucide-vue-next";
 
+import ImageGallery from "@/components/ImageGallery.vue";
 import {
   capitalizeFirstLetter,
   textToNumber,
@@ -40,7 +39,6 @@ import {
   useListingUtils,
 } from "@/lib/utils";
 import { main } from "./../../wailsjs/go/models";
-import ImageGallery from "./ImageGallery.vue";
 
 const getColourStyle = (color: string) => {
   return {

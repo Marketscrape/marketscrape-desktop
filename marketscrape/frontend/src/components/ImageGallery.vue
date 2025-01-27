@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { Sparkles } from "lucide-vue-next";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Sparkles } from "lucide-vue-next";
+import { ref } from "vue";
 
 defineProps(["images"]);
 

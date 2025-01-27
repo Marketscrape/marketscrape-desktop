@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
-import { Button } from "./components/ui/button";
+import { Button } from "@/components/ui/button";
 
 import { ArrowLeft } from "lucide-vue-next";
 
-import ListingInputCard from "./components/ListingInputCard.vue";
-import ProductListingCard from "./components/ProductListingCard.vue";
-import VehicleListingCard from "./components/VehicleListingCard.vue";
-import OllamaChat from "./components/OllamaChat.vue";
-import { main } from "./../wailsjs/go/models";
+import ListingInputCard from "@/components/ListingInputCard.vue";
+import OllamaChat from "@/components/OllamaChat.vue";
+import ProductListingCard from "@/components/ProductListingCard.vue";
+import VehicleListingCard from "@/components/VehicleListingCard.vue";
 import { Categories } from "@/lib/utils";
+import { main } from "./../wailsjs/go/models";
 
 const listing = ref<main.Root | null>(null);
 const listingType = ref<string | null>(null);
