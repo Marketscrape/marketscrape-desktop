@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
-import { SendIcon, Loader2, Sparkles } from "lucide-vue-next";
+import { Send, Sparkles, CircleAlert } from "lucide-vue-next";
 
 import OllamaIcon from "./OllamaIcon.vue";
 import { GetOllamaModels, PostOllamaModel } from "../../wailsjs/go/main/App.js";
@@ -112,9 +112,9 @@ const askModelsOpinion = () => {
         </div>
       </PopoverTrigger>
       <PopoverContent align="end" class="w-[600px] p-0">
-        <div class="flex flex-col h-[500px]">
+        <div v-if="models" class="flex flex-col h-[500px]">
           <div class="p-4 border-b grid grid-cols-2 gap-4">
-            <Select v-if="models" v-model="selectedModel">
+            <Select v-model="selectedModel">
               <SelectTrigger>
                 <SelectValue placeholder="Select a model" />
               </SelectTrigger>
@@ -190,10 +190,14 @@ const askModelsOpinion = () => {
                 type="submit"
                 :disabled="!selectedModel || !message.trim()"
               >
-                <SendIcon class="h-4 w-4" />
+                <Send class="h-4 w-4" />
               </Button>
             </form>
           </div>
+        </div>
+        <div v-else class="p-4 flex items-center">
+          <CircleAlert class="h-4 w-4 mr-2" />
+          Ollama doesn&apos;t seem to be running.
         </div>
       </PopoverContent>
     </Popover>
