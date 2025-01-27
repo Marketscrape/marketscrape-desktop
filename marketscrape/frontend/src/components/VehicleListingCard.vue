@@ -158,7 +158,7 @@ const { creationTime, filteredCategories, formatPrice } =
             }}
           </span>
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center" v-if="numberOfOwners">
           <User
             v-if="numberOfOwners === 1"
             class="h-4 w-4 text-muted-foreground mr-2"
