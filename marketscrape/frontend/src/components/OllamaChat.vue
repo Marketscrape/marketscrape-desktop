@@ -137,10 +137,7 @@ const askModelsOpinion = () => {
               @click="askModelsOpinion"
             >
               <Sparkles />
-              Ask about the
-              <p class="truncate">
-                {{ listing.target.marketplace_listing_title }}
-              </p>
+              Ask about the listing
             </Button>
           </div>
 
