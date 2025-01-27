@@ -218,7 +218,7 @@ const { creationTime, filteredCategories, formatPrice } =
         </div>
       </div>
     </CardContent>
-    <CardFooter class="flex justify-between">
+    <CardFooter class="flex justify-end">
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline" size="sm">
