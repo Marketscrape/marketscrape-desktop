@@ -21,6 +21,10 @@ const setImage = (index: number) => {
         class="object-cover rounded-md"
       />
       <div
+        v-if="
+          images[currentIndex]?.accessibility_caption !==
+          'No photo description available.'
+        "
         class="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-70 text-white text-sm px-4 py-2 rounded-md flex items-center"
       >
         <Sparkles class="h-4 w-4 mr-2" />
