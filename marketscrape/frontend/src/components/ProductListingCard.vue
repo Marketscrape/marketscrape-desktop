@@ -70,15 +70,13 @@ const { creationTime, filteredCategories, formatPrice } =
           <Clock class="h-4 w-4 text-muted-foreground mr-2" />
           <span>{{ capitalizeFirstLetter(creationTime) }}</span>
         </div>
+        <div class="flex items-center text-sm">
+          <MapPin class="h-4 w-4 text-muted-foreground mr-2" />
+          <span>{{ listing.target.location_text.text }}</span>
+        </div>
       </div>
-
-      <Separator />
     </CardContent>
-    <CardFooter class="flex justify-between">
-      <div class="flex items-center text-sm text-muted-foreground">
-        <MapPin class="h-4 w-4 mr-2" />
-        <span>{{ listing.target.location_text.text }}</span>
-      </div>
+    <CardFooter class="flex justify-end">
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline" size="sm">
