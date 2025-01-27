@@ -77,7 +77,8 @@ const { creationTime, filteredCategories, formatPrice } =
           {{ listing.target.marketplace_listing_title }}
         </div>
         <div>
-          {{ formatPrice }}
+          {{ capitalizeFirstLetter(creationTime) }}, for {{ formatPrice }} in
+          {{ listing.target.location_text.text }}
         </div>
       </CardTitle>
       <CardDescription
@@ -95,7 +96,7 @@ const { creationTime, filteredCategories, formatPrice } =
     </CardHeader>
     <CardContent class="space-y-4">
       <blockquote className="border-l-2 pl-6 italic whitespace-pre-wrap">
-        {{ listing.target.redacted_description.text }}
+        "{{ listing.target.redacted_description.text }}"
       </blockquote>
 
       <Separator />
@@ -214,16 +215,6 @@ const { creationTime, filteredCategories, formatPrice } =
           <span>
             {{ numberOfOwners === 1 ? "1 owner" : `${numberOfOwners} owners` }}
           </span>
-        </div>
-
-        <div class="flex items-center">
-          <Clock class="h-4 w-4 text-muted-foreground mr-2" />
-          <span>{{ capitalizeFirstLetter(creationTime) }}</span>
-        </div>
-
-        <div class="flex items-center text-sm">
-          <MapPin class="h-4 w-4 text-muted-foreground mr-2" />
-          <span>{{ listing.target.location_text.text }}</span>
         </div>
       </div>
     </CardContent>
