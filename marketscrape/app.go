@@ -11,8 +11,11 @@ import (
 	"net/url"
 	"regexp"
 	"strings"
+	"os"
+	"os/exec"
 
 	"github.com/iunary/fakeuseragent"
+	"github.com/PuerkitoBio/goquery"
 )
 
 // ---------------------------------------------------------
@@ -248,15 +251,6 @@ func (a *App) GetMarketplaceListing(id string) (*Root, error) {
 	req.Header.Set("Accept", "*/*")
 	req.Header.Set("Accept-Language", "en-CA,en-US;q=0.7,en;q=0.3")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("X-FB-Friendly-Name", "MarketplacePDPContainerQuery")
-	req.Header.Set("Origin", "https://www.facebook.com")
-	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Referer", "https://www.facebook.com/marketplace/?ref=app_tab")
-	req.Header.Set("Sec-Fetch-Dest", "empty")
-	req.Header.Set("Sec-Fetch-Mode", "cors")
-	req.Header.Set("Sec-Fetch-Site", "same-origin")
-	req.Header.Set("Priority", "u=1")
-	req.Header.Set("TE", "trailers")
 
 	res, err := client.Do(req)
 	if err != nil {
@@ -280,8 +274,17 @@ func (a *App) GetMarketplaceListing(id string) (*Root, error) {
 		return nil, fmt.Errorf("error parsing marketplace listing: %v", err)
 	}
 
+	// Call eBay listing search using the title of the marketplace listing
+	if root != nil {
+		err := a.GetEbayListing(root.Target.Title)
+		if err != nil {
+			return nil, fmt.Errorf("error getting eBay listing: %v", err)
+		}
+	}
+
 	return root, nil
 }
+
 
 // ---------------------------------------------------------
 // SECTION: Ollama
@@ -384,4 +387,81 @@ func (a *App) PostOllamaModel(model string, message string) (*ModelReponse, erro
 	}
 
 	return &response, nil
+}
+
+// ---------------------------------------------------------
+// SECTION: eBay
+// ---------------------------------------------------------
+type EbayResponse struct {
+	Title     string
+	Price     string
+	Link      string
+	Condition string
+	Shipping  string
+}
+
+func (a *App) GetEbayListing(searchQuery string) error {
+	if searchQuery == "" {
+		return fmt.Errorf("search query cannot be empty")
+	}
+
+	searchTerm := url.QueryEscape(searchQuery)
+	ebayURL := fmt.Sprintf("https://www.ebay.ca/sch/i.html?_nkw=%s", searchTerm)
+
+	cmd := exec.Command("curl", ebayURL,
+		"--compressed",
+		"-H", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+	)
+
+	var out bytes.Buffer
+	cmd.Stdout = &out
+
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("error fetching eBay listings: %v", err)
+	}
+
+	doc, err := goquery.NewDocumentFromReader(&out)
+	if err != nil {
+		return fmt.Errorf("error parsing HTML: %v", err)
+	}
+
+	var listings []EbayResponse
+	doc.Find(".s-item").Each(func(index int, item *goquery.Selection) {
+		title := item.Find(".s-item__title").Text()
+		link, _ := item.Find(".s-item__link").Attr("href")
+		price := item.Find(".s-item__price").Text()
+		condition := item.Find(".s-item__subtitle").Text()
+		shipping := item.Find(".s-item__shipping").Text()
+
+		if title != "" && link != "" && price != "" {
+			listings = append(listings, EbayResponse{
+				Title:     title,
+				Price:     price,
+				Link:      link,
+				Condition: condition,
+				Shipping:  shipping,
+			})
+		}
+	})
+
+	// Save parsed data to a file
+	outputFile := "ebay_results_parsed.txt"
+	file, err := os.Create(outputFile)
+	if err != nil {
+		return fmt.Errorf("error creating output file: %v", err)
+	}
+	defer file.Close()
+
+	for _, listing := range listings {
+		_, err := file.WriteString(fmt.Sprintf(
+			"Title: %s\nPrice: %s\nLink: %s\nCondition: %s\nShipping: %s\n\n",
+			listing.Title, listing.Price, listing.Link, listing.Condition, listing.Shipping,
+		))
+		if err != nil {
+			return fmt.Errorf("error writing to file: %v", err)
+		}
+	}
+
+	fmt.Printf("Scraping complete. Results saved in %s\n", outputFile)
+	return nil
 }
