@@ -405,49 +405,63 @@ func (a *App) GetEbayListing(searchQuery string) error {
 	}
 
 	searchTerm := url.QueryEscape(searchQuery)
-	ebayURL := fmt.Sprintf("https://www.ebay.ca/sch/i.html?_nkw=%s", searchTerm)
+	baseURL := "https://www.ebay.ca/sch/i.html?_nkw=%s&_pgn=%d"
+	var allListings []EbayResponse
 
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", ebayURL, nil)
-	if err != nil {
-		return fmt.Errorf("error creating request: %v", err)
-	}
+	maxPages := 10 // Limit to 10 pages
 
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
-
-	res, err := client.Do(req)
-	if err != nil {
-		return fmt.Errorf("error fetching eBay listings: %v", err)
-	}
-	defer res.Body.Close()
-
-	if res.StatusCode != http.StatusOK {
-		return fmt.Errorf("unexpected status code: %d", res.StatusCode)
-	}
-
-	doc, err := goquery.NewDocumentFromReader(res.Body)
-	if err != nil {
-		return fmt.Errorf("error parsing HTML: %v", err)
-	}
-
-	var listings []EbayResponse
-	doc.Find(".s-item").Each(func(index int, item *goquery.Selection) {
-		title := item.Find(".s-item__title").Text()
-		link, _ := item.Find(".s-item__link").Attr("href")
-		price := item.Find(".s-item__price").Text()
-		condition := item.Find(".SECONDARY_INFO").Text()
-		shipping := item.Find(".s-item__shipping").Text()
-
-		if title != "" && link != "" {
-			listings = append(listings, EbayResponse{
-				Title:     title,
-				Price:     price,
-				Link:      link,
-				Condition: condition,
-				Shipping:  shipping,
-			})
+	for page := 1; page <= maxPages; page++ {
+		ebayURL := fmt.Sprintf(baseURL, searchTerm, page)
+		req, err := http.NewRequest("GET", ebayURL, nil)
+		if err != nil {
+			return fmt.Errorf("error creating request: %v", err)
 		}
-	})
+
+		req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
+
+		res, err := client.Do(req)
+		if err != nil {
+			return fmt.Errorf("error fetching eBay listings: %v", err)
+		}
+		defer res.Body.Close()
+
+		if res.StatusCode != http.StatusOK {
+			return fmt.Errorf("unexpected status code: %d", res.StatusCode)
+		}
+
+		doc, err := goquery.NewDocumentFromReader(res.Body)
+		if err != nil {
+			return fmt.Errorf("error parsing HTML: %v", err)
+		}
+
+		var listings []EbayResponse
+		doc.Find(".s-item").Each(func(index int, item *goquery.Selection) {
+			title := strings.TrimSpace(item.Find(".s-item__title").Text())
+			link, _ := item.Find(".s-item__link").Attr("href")
+			price := strings.TrimSpace(item.Find(".s-item__price").Text())
+			condition := strings.TrimSpace(item.Find(".SECONDARY_INFO").Text())
+			shipping := strings.TrimSpace(item.Find(".s-item__shipping").Text())
+
+			if title != "" && link != "" {
+				listings = append(listings, EbayResponse{
+					Title:     title,
+					Price:     price,
+					Link:      link,
+					Condition: condition,
+					Shipping:  shipping,
+				})
+			}
+		})
+
+		if len(listings) == 0 {
+			fmt.Printf("No more results found at page %d, stopping...\n", page)
+			break
+		}
+
+		allListings = append(allListings, listings...)
+		fmt.Printf("Scraped %d items from page %d\n", len(listings), page)
+	}
 
 	file, err := os.Create("ebay_listings.txt")
 	if err != nil {
@@ -455,12 +469,12 @@ func (a *App) GetEbayListing(searchQuery string) error {
 	}
 	defer file.Close()
 
-	for _, listing := range listings {
+	for _, listing := range allListings {
 		fmt.Fprintf(file, "Title: %s\nPrice: %s\nCondition: %s\nShipping: %s\nLink: %s\n\n",
 			listing.Title, listing.Price, listing.Condition, listing.Shipping, listing.Link)
 	}
 
-	fmt.Println("eBay listings saved to ebay_listings.txt")
+	fmt.Println("All eBay listings saved to ebay_listings.txt")
 	return nil
 }
 
