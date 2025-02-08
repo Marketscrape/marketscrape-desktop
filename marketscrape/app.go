@@ -12,7 +12,6 @@ import (
 	"regexp"
 	"strings"
 	"os"
-	"os/exec"
 
 	"github.com/iunary/fakeuseragent"
 	"github.com/PuerkitoBio/goquery"
@@ -408,19 +407,25 @@ func (a *App) GetEbayListing(searchQuery string) error {
 	searchTerm := url.QueryEscape(searchQuery)
 	ebayURL := fmt.Sprintf("https://www.ebay.ca/sch/i.html?_nkw=%s", searchTerm)
 
-	cmd := exec.Command("curl", ebayURL,
-		"--compressed",
-		"-H", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-	)
-
-	var out bytes.Buffer
-	cmd.Stdout = &out
-
-	if err := cmd.Run(); err != nil {
-		return fmt.Errorf("error fetching eBay listings: %v", err)
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", ebayURL, nil)
+	if err != nil {
+		return fmt.Errorf("error creating request: %v", err)
 	}
 
-	doc, err := goquery.NewDocumentFromReader(&out)
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
+
+	res, err := client.Do(req)
+	if err != nil {
+		return fmt.Errorf("error fetching eBay listings: %v", err)
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode != http.StatusOK {
+		return fmt.Errorf("unexpected status code: %d", res.StatusCode)
+	}
+
+	doc, err := goquery.NewDocumentFromReader(res.Body)
 	if err != nil {
 		return fmt.Errorf("error parsing HTML: %v", err)
 	}
@@ -430,10 +435,10 @@ func (a *App) GetEbayListing(searchQuery string) error {
 		title := item.Find(".s-item__title").Text()
 		link, _ := item.Find(".s-item__link").Attr("href")
 		price := item.Find(".s-item__price").Text()
-		condition := item.Find(".s-item__subtitle").Text()
+		condition := item.Find(".SECONDARY_INFO").Text()
 		shipping := item.Find(".s-item__shipping").Text()
 
-		if title != "" && link != "" && price != "" {
+		if title != "" && link != "" {
 			listings = append(listings, EbayResponse{
 				Title:     title,
 				Price:     price,
@@ -444,24 +449,18 @@ func (a *App) GetEbayListing(searchQuery string) error {
 		}
 	})
 
-	// Save parsed data to a file
-	outputFile := "ebay_results_parsed.txt"
-	file, err := os.Create(outputFile)
+	file, err := os.Create("ebay_listings.txt")
 	if err != nil {
 		return fmt.Errorf("error creating output file: %v", err)
 	}
 	defer file.Close()
 
 	for _, listing := range listings {
-		_, err := file.WriteString(fmt.Sprintf(
-			"Title: %s\nPrice: %s\nLink: %s\nCondition: %s\nShipping: %s\n\n",
-			listing.Title, listing.Price, listing.Link, listing.Condition, listing.Shipping,
-		))
-		if err != nil {
-			return fmt.Errorf("error writing to file: %v", err)
-		}
+		fmt.Fprintf(file, "Title: %s\nPrice: %s\nCondition: %s\nShipping: %s\nLink: %s\n\n",
+			listing.Title, listing.Price, listing.Condition, listing.Shipping, listing.Link)
 	}
 
-	fmt.Printf("Scraping complete. Results saved in %s\n", outputFile)
+	fmt.Println("eBay listings saved to ebay_listings.txt")
 	return nil
 }
+
